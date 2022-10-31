@@ -3,6 +3,7 @@ import { VStack, Box, Text, Divider, FavouriteIcon, Flex } from 'native-base';
 import db from '../firebaseConfig';
 
 import { collection, getDocs, DocumentData } from 'firebase/firestore';
+import AddNewPostButton from './AddNewPostButton';
 
 export default function () {
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
@@ -45,6 +46,7 @@ export default function () {
   return (
     <VStack borderRadius="md" width="1/4" space="4">
       {mapPosts}
+      <AddNewPostButton />
     </VStack>
   );
 }
