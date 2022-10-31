@@ -1,21 +1,24 @@
 import React from 'react';
-import { VStack, Box, Text, Divider, FavouriteIcon, Flex } from 'native-base';
+import { VStack, Box, Text, FavouriteIcon, Flex } from 'native-base';
 import db from '../firebaseConfig';
-
-import { collection, getDocs, DocumentData } from 'firebase/firestore';
+import { collection, getDocs, DocumentData, doc, onSnapshot, query, orderBy } from 'firebase/firestore';
 import AddNewPostButton from './AddNewPostButton';
 
 export default function () {
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
 
   React.useEffect(() => {
-    const getAnnouncements = async () => {
-      const querySnapshot = await getDocs(collection(db, 'publicPosts'));
-      querySnapshot.forEach((doc) => {
-        setPosts((prev) => [...prev, doc.data()]);
+    const getPosts = async () => {
+      const q = query(collection(db, 'publicPosts'), orderBy('date', 'desc'));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        setPosts([]);
+        querySnapshot.forEach((doc) => {
+          setPosts((prev) => [...prev, doc.data()]);
+        });
       });
     };
-    getAnnouncements();
+
+    getPosts();
   }, []);
 
   const mapPosts = posts.map((post) => {
