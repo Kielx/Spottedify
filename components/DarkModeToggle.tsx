@@ -1,5 +1,5 @@
 import React from "react";
-import { useColorMode, HStack, Text, Switch, MoonIcon } from "native-base";
+import { useColorMode, HStack, Switch, MoonIcon, SunIcon } from 'native-base';
 
 // Color Switch Component
 const ToggleDarkMode = () => {
@@ -7,17 +7,14 @@ const ToggleDarkMode = () => {
   return (
     <HStack space={2} alignItems="center">
       <MoonIcon size="5" mt="0.5" color="white" />
-      <Text>Dark</Text>
       <Switch
-        isChecked={colorMode === "light"}
+        isChecked={colorMode === 'light'}
         onToggle={toggleColorMode}
-        aria-label={
-          colorMode === "light" ? "switch to dark mode" : "switch to light mode"
-        }
+        aria-label={colorMode === 'light' ? 'switch to dark mode' : 'switch to light mode'}
       />
-      <Text>Light</Text>
+      <SunIcon size="5" mt="0.5" color="white" />
     </HStack>
   );
-}
+};
 
 export default ToggleDarkMode;

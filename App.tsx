@@ -35,11 +35,10 @@ export default function App() {
           justifyContent="center"
           height="40"
           width="100%"
-          bg="green.300"
           _light={{ bg: 'green.300', color: 'white' }}
-          _dark={{ bg: 'amber.900', color: 'white' }}>
+          _dark={{ bg: 'gray.900', color: 'white' }}>
           <Flex direction="row" justifyContent="center">
-            <Box>
+            <Box mr="8">
               <Heading textAlign="center" size="xl">
                 Spottedify
               </Heading>
