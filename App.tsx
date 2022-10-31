@@ -10,7 +10,7 @@ import {
   Flex,
 } from 'native-base';
 import DarkModeToggle from './components/DarkModeToggle';
-import AnnouncementList from './components/AnnouncementList';
+import PostsList from './components/PostsList';
 
 // Define the config
 const config = {
@@ -46,7 +46,7 @@ export default function App() {
             <DarkModeToggle />
           </Flex>
         </View>
-        <AnnouncementList></AnnouncementList>
+        <PostsList></PostsList>
       </VStack>
     </NativeBaseProvider>
   );
