@@ -1,9 +1,6 @@
 import React from 'react';
 import {
   Text,
-  Link,
-  HStack,
-  Center,
   Heading,
   NativeBaseProvider,
   extendTheme,
@@ -12,8 +9,8 @@ import {
   View,
   Flex,
 } from 'native-base';
-import NativeBaseIcon from './components/NativeBaseIcon';
 import DarkModeToggle from './components/DarkModeToggle';
+import AnnouncementList from './components/AnnouncementList';
 
 // Define the config
 const config = {
@@ -49,6 +46,7 @@ export default function App() {
             <DarkModeToggle />
           </Flex>
         </View>
+        <AnnouncementList></AnnouncementList>
       </VStack>
     </NativeBaseProvider>
   );
