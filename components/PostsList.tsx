@@ -13,7 +13,9 @@ export default function () {
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         setPosts([]);
         querySnapshot.forEach((doc) => {
-          setPosts((prev) => [...prev, doc.data()]);
+          const data: DocumentData = doc.data();
+          const id: string = doc.id;
+          setPosts((prev: DocumentData[]) => [...prev, { ...data, id }]);
         });
       });
     };
@@ -28,9 +30,10 @@ export default function () {
         _dark={{ bg: 'gray.900', color: 'white' }}
         p="4"
         rounded="md"
-        shadow="3">
+        shadow="3"
+        key={post.id}>
         <Box>
-          <Text pt="1" fontWeight="bold" fontSize="xl" lineHeight="tight">
+          <Text pt="1" fontWeight="bold" fontSize="xl">
             {post.title}
           </Text>
           <Text fontSize="sm" color="gray.500">
