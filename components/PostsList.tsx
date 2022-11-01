@@ -29,7 +29,7 @@ export default function () {
   });
 
   return (
-    <VStack borderRadius="md" width="1/4" space="4">
+    <VStack borderRadius="md" width="full" space="4" px="6" pb="20">
       {mapPosts}
       <AddNewPostButton />
     </VStack>
