@@ -46,7 +46,7 @@ export default function App() {
             <DarkModeToggle />
           </Flex>
         </View>
-        <PostsList></PostsList>
+        <PostsList />
       </VStack>
     </NativeBaseProvider>
   );

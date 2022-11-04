@@ -18,6 +18,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "eslint-import-resolver-typescript": "^3.5.2",
     "expo": "^44.0.0",
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.13.0",

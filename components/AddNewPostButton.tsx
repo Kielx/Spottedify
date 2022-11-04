@@ -1,10 +1,10 @@
-import { Fab } from 'native-base';
-import { Modal, Button, Stack, Input, TextArea } from 'native-base';
-import React from 'react';
-import db from '../firebaseConfig';
-import { addDoc, Timestamp, collection } from 'firebase/firestore';
+import { Fab , Modal, Button, Stack, Input, TextArea } from 'native-base';
 
-const AddNewPostButton = () => {
+import React from 'react';
+import { addDoc, Timestamp, collection } from 'firebase/firestore';
+import db from '../firebaseConfig';
+
+function AddNewPostButton() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [newPost, setNewPost] = React.useState({
     title: '',
@@ -75,6 +75,6 @@ const AddNewPostButton = () => {
       <Fab shadow={2} size="sm" label="Dodaj ogłoszenie" onPress={() => setModalVisible(true)} />
     </>
   );
-};
+}
 
 export default AddNewPostButton;

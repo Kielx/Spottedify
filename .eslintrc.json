@@ -19,6 +19,12 @@
   "plugins": ["react", "react-native", "@typescript-eslint"],
   "rules": {
     "linebreak-style": 0,
-    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }]
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "import/extensions": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
   }
 }
