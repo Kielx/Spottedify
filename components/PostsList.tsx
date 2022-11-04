@@ -1,7 +1,7 @@
 import React from 'react';
 import { VStack } from 'native-base';
-import db from '../firebaseConfig';
 import { collection, DocumentData, onSnapshot, query, orderBy } from 'firebase/firestore';
+import db from '../firebaseConfig';
 import AddNewPostButton from './AddNewPostButton';
 import Post from './Post';
 
@@ -15,7 +15,7 @@ export default function PostsList() {
         setPosts([]);
         querySnapshot.forEach((doc) => {
           const data: DocumentData = doc.data();
-          const id: string = doc.id;
+          const {id} = doc;
           setPosts((prev: DocumentData[]) => [...prev, { ...data, id }]);
         });
       });
@@ -24,9 +24,7 @@ export default function PostsList() {
     getPosts();
   }, []);
 
-  const mapPosts = posts.map((post) => {
-    return <Post post={post} key={post.id} />;
-  });
+  const mapPosts = posts.map((post) => <Post post={post} key={post.id} />);
 
   return (
     <VStack borderRadius="md" width="full" space="4" px="6" pb="20">

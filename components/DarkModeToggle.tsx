@@ -2,7 +2,7 @@ import React from "react";
 import { useColorMode, HStack, Switch, MoonIcon, SunIcon } from 'native-base';
 
 // Color Switch Component
-const ToggleDarkMode = () => {
+function ToggleDarkMode() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <HStack space={2} alignItems="center">
@@ -22,6 +22,6 @@ const ToggleDarkMode = () => {
       />
     </HStack>
   );
-};
+}
 
 export default ToggleDarkMode;

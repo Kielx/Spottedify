@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text, FavouriteIcon, Flex } from 'native-base';
 import { DocumentData } from 'firebase/firestore';
 
-const Post = ({ post }: DocumentData) => {
+function Post({ post }: DocumentData) {
   return (
     <Box
       _light={{ bg: 'green.300', color: 'white' }}
@@ -15,7 +15,7 @@ const Post = ({ post }: DocumentData) => {
           {post.title}
         </Text>
         <Text fontSize="sm" color="gray.500">
-          {post.date.toDate().toLocaleDateString('pl-PL')} - {post.location}
+          {post.date.toDate().toLocaleDateString('pl-PL')} -{post.location}
         </Text>
         <Box py="1">{post.description}</Box>
         <Flex flexDirection="row">
@@ -25,6 +25,6 @@ const Post = ({ post }: DocumentData) => {
       </Box>
     </Box>
   );
-};
+}
 
 export default Post;
