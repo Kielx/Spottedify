@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text, FavouriteIcon, Flex } from 'native-base';
 import { DocumentData } from 'firebase/firestore';
 
-function Post({ post }: DocumentData) {
+function Post({ post }: any) {
   return (
     <Box
       _light={{ bg: 'green.300', color: 'white' }}
