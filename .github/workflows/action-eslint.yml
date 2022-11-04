@@ -1,0 +1,2 @@
+- name: Action ESLint
+  uses: sibiraj-s/action-eslint@v2.1.2
