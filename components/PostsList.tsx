@@ -5,13 +5,13 @@ import { collection, DocumentData, onSnapshot, query, orderBy } from 'firebase/f
 import AddNewPostButton from './AddNewPostButton';
 import Post from './Post';
 
-export default function () {
+export default function PostsList() {
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
 
   React.useEffect(() => {
     const getPosts = async () => {
       const q = query(collection(db, 'publicPosts'), orderBy('date', 'desc'));
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      onSnapshot(q, (querySnapshot) => {
         setPosts([]);
         querySnapshot.forEach((doc) => {
           const data: DocumentData = doc.data();
@@ -35,3 +35,4 @@ export default function () {
     </VStack>
   );
 }
+

@@ -4,9 +4,7 @@ import React from 'react';
 import db from '../firebaseConfig';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
 
-type Props = {};
-
-const AddNewPostButton = (props: Props) => {
+const AddNewPostButton = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [newPost, setNewPost] = React.useState({
     title: '',
