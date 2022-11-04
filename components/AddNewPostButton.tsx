@@ -1,19 +1,8 @@
-import { Fab, AddIcon } from 'native-base';
-import {
-  Modal,
-  Button,
-  ScrollView,
-  Text,
-  Center,
-  VStack,
-  NativeBaseProvider,
-  Stack,
-  Input,
-  TextArea,
-} from 'native-base';
+import { Fab } from 'native-base';
+import { Modal, Button, Stack, Input, TextArea } from 'native-base';
 import React from 'react';
 import db from '../firebaseConfig';
-import { doc, addDoc, Timestamp, collection } from 'firebase/firestore';
+import { addDoc, Timestamp, collection } from 'firebase/firestore';
 
 type Props = {};
 
