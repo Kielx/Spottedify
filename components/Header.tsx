@@ -1,16 +1,16 @@
 import React from 'react';
-import { Text, Heading } from 'native-base';
+import { Text, Heading, Box } from 'native-base';
 
 function Header() {
   return (
-    <>
-      <Heading textAlign="center" size="xl">
+    <Box px={4} my={4}>
+      <Heading textAlign="center" size="lg">
         Spottedify
       </Heading>
-      <Text fontSize="lg" textAlign="center">
+      <Text fontSize="sm" textAlign="center">
         Twoje lokalne ogłoszenia
       </Text>
-    </>
+    </Box>
   );
 }
 

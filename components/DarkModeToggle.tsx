@@ -5,7 +5,7 @@ import { useColorMode, HStack, Switch, MoonIcon, SunIcon } from 'native-base';
 function ToggleDarkMode() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <HStack space={2} alignItems="center">
+    <HStack space={2} alignItems="center" px={2}>
       <MoonIcon size="5" mt="0.5" _light={{ color: 'black' }} _dark={{ color: 'white' }} />
       <Switch
         isChecked={colorMode === 'light'}
