@@ -4,6 +4,8 @@ import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navig
 import { NativeBaseProvider, extendTheme, View, Text } from 'native-base';
 import { Timestamp } from 'firebase/firestore';
 import HomeScreen from './screens/HomeScreen';
+import ToggleDarkMode from './components/DarkModeToggle';
+import Header from './components/Header';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -46,16 +48,30 @@ type MyThemeType = typeof theme;
 declare module 'native-base' {
   type ICustomTheme = MyThemeType;
 }
+
+function ToggleDarkModeComponent() {
+  return <ToggleDarkMode />;
+}
+
+function HeaderComponent() {
+  return <Header />;
+}
+
 export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerStyle: { backgroundColor: '#86efac' },
+            headerRight: ToggleDarkModeComponent,
+          }}>
           <Stack.Screen
             name="Home"
             component={HomeScreen}
             options={{
-              title: 'Spottedify',
+              headerTitle: HeaderComponent,
             }}
           />
           <Stack.Screen name="Details" component={DetailsScreen} />
