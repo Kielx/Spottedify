@@ -1,4 +1,4 @@
-import { View, Text } from 'native-base';
+import { View, Text, Heading, VStack } from 'native-base';
 import React from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
@@ -12,11 +12,15 @@ function PostDetailsScreen({ route }: Props) {
   navigation.setOptions({ headerTitle: post.title });
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-      <Text>{post.title}</Text>
+    <VStack
+      space={5}
+      p={4}
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      _light={{ color: 'white' }}
+      _dark={{ bg: 'light.700', color: 'white' }}>
+      <Heading>{post.title}</Heading>
       <Text>{post.description}</Text>
-    </View>
+    </VStack>
   );
 }
 

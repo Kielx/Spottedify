@@ -13,7 +13,7 @@ function Post({ post }: DocumentData) {
   return (
     <Box
       _light={{ bg: 'green.300', color: 'white' }}
-      _dark={{ bg: 'gray.900', color: 'white' }}
+      _dark={{ bg: 'light.700', color: 'white' }}
       p="4"
       rounded="md"
       shadow="3">
