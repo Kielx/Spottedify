@@ -1,4 +1,4 @@
-import { View, Text, Heading, VStack } from 'native-base';
+import { Text, Heading, VStack } from 'native-base';
 import React from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';

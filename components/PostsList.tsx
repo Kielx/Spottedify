@@ -1,9 +1,9 @@
 import React from 'react';
-import { VStack } from 'native-base';
+import { ScrollView } from 'native-base';
 import { collection, DocumentData, onSnapshot, query, orderBy } from 'firebase/firestore';
 import db from '../firebaseConfig';
-import AddNewPostButton from './AddNewPostButton';
 import Post from './Post';
+import { verticalScale, horizontalScale } from '../utils/Metrics';
 
 export default function PostsList() {
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
@@ -15,7 +15,7 @@ export default function PostsList() {
         setPosts([]);
         querySnapshot.forEach((doc) => {
           const data: DocumentData = doc.data();
-          const {id} = doc;
+          const { id } = doc;
           setPosts((prev: DocumentData[]) => [...prev, { ...data, id }]);
         });
       });
@@ -27,10 +27,9 @@ export default function PostsList() {
   const mapPosts = posts.map((post) => <Post post={post} key={post.id} />);
 
   return (
-    <VStack borderRadius="md" width="full" space="4" px="6" pb="20">
+    <ScrollView px={4} w={horizontalScale(300)} h={verticalScale(550)}>
       {mapPosts}
-      <AddNewPostButton />
-    </VStack>
+    </ScrollView>
   );
 }
 

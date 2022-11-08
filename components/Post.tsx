@@ -15,6 +15,7 @@ function Post({ post }: DocumentData) {
       _light={{ bg: 'green.300', color: 'white' }}
       _dark={{ bg: 'light.700', color: 'white' }}
       p="4"
+      my="4"
       rounded="md"
       shadow="3">
       <Box>
