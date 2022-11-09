@@ -9,10 +9,12 @@ import Header from './components/Header';
 import PostDetailsScreen from './screens/PostDetailsScreen';
 import AuthStateListener from './utils/AuthStateListener';
 import Signup from './screens/SignupScreen';
+import SigninScreen from './screens/SigninScreen';
 
 export type RootStackParamList = {
   Home: undefined;
   Signup: undefined;
+  Signin: undefined;
   Details: {
     post: {
       title: string;
@@ -67,6 +69,7 @@ export default function App() {
             />
             <Stack.Screen name="Details" component={PostDetailsScreen} />
             <Stack.Screen name="Signup" component={Signup} />
+            <Stack.Screen name="Signin" component={SigninScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </AuthStateListener>

@@ -23,7 +23,12 @@ function HomeScreen() {
       pt={8}
       alignItems="center"
       _dark={{ bg: 'light.900' }}>
-      <Button onPress={() => navigation.navigate('Signup')} title="Sign Up" />
+      <Button onPress={() => navigation.navigate('Signup')} title="Sign Up">
+        Signup
+      </Button>
+      <Button onPress={() => navigation.navigate('Signin')} title="Signin">
+        Signin
+      </Button>
       <PostsList />
       <AddNewPostButton />
     </VStack>
