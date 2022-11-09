@@ -7,9 +7,12 @@ import HomeScreen from './screens/HomeScreen';
 import ToggleDarkMode from './components/DarkModeToggle';
 import Header from './components/Header';
 import PostDetailsScreen from './screens/PostDetailsScreen';
+import AuthStateListener from './utils/AuthStateListener';
+import Signup from './screens/SignupScreen';
 
 export type RootStackParamList = {
   Home: undefined;
+  Signup: undefined;
   Details: {
     post: {
       title: string;
@@ -47,23 +50,26 @@ function HeaderComponent() {
 export default function App() {
   return (
     <NativeBaseProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerStyle: { backgroundColor: '#86efac' },
-            headerRight: ToggleDarkModeComponent,
-          }}>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              headerTitle: HeaderComponent,
-            }}
-          />
-          <Stack.Screen name="Details" component={PostDetailsScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <AuthStateListener>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              headerStyle: { backgroundColor: '#86efac' },
+              headerRight: ToggleDarkModeComponent,
+            }}>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                headerTitle: HeaderComponent,
+              }}
+            />
+            <Stack.Screen name="Details" component={PostDetailsScreen} />
+            <Stack.Screen name="Signup" component={Signup} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthStateListener>
     </NativeBaseProvider>
   );
 }
