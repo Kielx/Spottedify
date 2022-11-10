@@ -12,6 +12,7 @@ function Post({ post }: DocumentData) {
 
   return (
     <Box
+      key={post.id}
       _light={{ bg: 'green.300', color: 'white' }}
       _dark={{ bg: 'light.700', color: 'white' }}
       p="4"

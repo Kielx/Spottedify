@@ -39,6 +39,7 @@ function SigninScreen() {
         if (!toast.isActive('signin-error')) {
           toast.show({
             id: 'signin-error',
+            placement: 'top',
             render: () => (
               <Box bg="red.500" px="4" py="2" rounded="md" mb={5}>
                 <Text color="white" fontSize="lg" px="2">
@@ -53,7 +54,7 @@ function SigninScreen() {
   };
 
   return (
-    <Center w="100%">
+    <Center w="100%" h="full" _dark={{ bg: 'light.900' }}>
       <Box safeArea p="2" py="8" w="90%" maxW="290">
         <Heading
           size="lg"
@@ -62,7 +63,7 @@ function SigninScreen() {
           _dark={{
             color: 'warmGray.50',
           }}>
-          Welcome
+          Witaj!
         </Heading>
         <Heading
           mt="1"
@@ -72,34 +73,34 @@ function SigninScreen() {
           color="coolGray.600"
           fontWeight="medium"
           size="xs">
-          Sign in to continue!
+          Zaloguj się by kontynuować!
         </Heading>
 
         <VStack space={3} mt="5">
           <FormControl>
-            <FormControl.Label>Email ID</FormControl.Label>
+            <FormControl.Label>Adres E-mail</FormControl.Label>
             <Input type="email" onChangeText={(value) => handleChange('email', value)} />
           </FormControl>
           <FormControl>
-            <FormControl.Label>Password</FormControl.Label>
+            <FormControl.Label>Hasło</FormControl.Label>
             <Input type="password" onChangeText={(value) => handleChange('password', value)} />
             <Link
               _text={{
                 fontSize: 'xs',
                 fontWeight: '500',
-                color: 'indigo.500',
+                color: 'green.400',
               }}
               href="/test"
               alignSelf="flex-end"
               mt="1">
-              Forget Password?
+              Zapomniałeś hasła?
             </Link>
           </FormControl>
           <Button
             onPress={() => signin(formInputs.email, formInputs.password)}
             mt="2"
-            colorScheme="indigo">
-            Sign in
+            colorScheme="green">
+            Zaloguj się
           </Button>
           <HStack mt="6" justifyContent="center">
             <Text
@@ -113,10 +114,11 @@ function SigninScreen() {
             <Link
               href="/test"
               _text={{
-                color: 'indigo.500',
+                color: 'green.400',
                 fontWeight: 'medium',
                 fontSize: 'sm',
               }}>
+              {' '}
               Dołącz do nas!
             </Link>
           </HStack>

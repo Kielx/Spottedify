@@ -26,15 +26,17 @@ function HomeScreen() {
       _dark={{ bg: 'light.900' }}>
       {!currentUser ? (
         <>
-          <Button onPress={() => navigation.navigate('Signup')} title="Sign Up">
+          <Button key="signup" onPress={() => navigation.navigate('Signup')} title="Sign Up">
             Signup
           </Button>
-          <Button onPress={() => navigation.navigate('Signin')} title="Signin">
+          <Button key="signin" onPress={() => navigation.navigate('Signin')} title="Signin">
             Signin
           </Button>
         </>
       ) : (
-        <Button onPress={() => signOut(auth)}>Logout</Button>
+        <Button key="logout" onPress={() => signOut(auth)}>
+          Logout
+        </Button>
       )}
 
       <PostsList />
