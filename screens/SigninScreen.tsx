@@ -121,7 +121,9 @@ function SigninScreen() {
               Nowy użytkownik?
             </Text>
             <Link
-              href="/test"
+              onPress={() => {
+                navigation.navigate('Signup');
+              }}
               _text={{
                 color: 'green.400',
                 fontWeight: 'medium',
