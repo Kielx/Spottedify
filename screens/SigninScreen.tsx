@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useState } from 'react';
 
 import {
   Box,
@@ -13,15 +13,15 @@ import {
   Center,
 } from 'native-base';
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { AuthContext } from '../utils/AuthStateListener';
 
 function SigninScreen() {
   const auth = getAuth();
-  const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
 
-  const emailInput = useRef<any>('');
-  const passwordInput = useRef<any>('');
+  const [formInputs, setFormInputs] = useState({ email: '', password: '' });
+
+  const handleChange = (name: string, value: string) => {
+    setFormInputs({ ...formInputs, [name]: value });
+  };
 
   const signin = async (email: string, password: string) => {
     signInWithEmailAndPassword(auth, email, password)
@@ -65,11 +65,11 @@ function SigninScreen() {
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>Email ID</FormControl.Label>
-            <Input type="email" ref={emailInput} />
+            <Input type="email" onChangeText={(value) => handleChange('email', value)} />
           </FormControl>
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
-            <Input ref={passwordInput} type="password" />
+            <Input type="password" onChangeText={(value) => handleChange('password', value)} />
             <Link
               _text={{
                 fontSize: 'xs',
@@ -84,8 +84,7 @@ function SigninScreen() {
           </FormControl>
           <Button
             onPress={() => {
-              console.log(emailInput.current?.value);
-              return signin(emailInput.current?.value, passwordInput.current?.value);
+              return signin(formInputs.email, formInputs.password);
             }}
             mt="2"
             colorScheme="indigo">
