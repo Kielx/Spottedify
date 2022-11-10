@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import {
   Box,
   Text,
@@ -11,11 +10,14 @@ import {
   Button,
   HStack,
   Center,
+  useToast,
+  WarningTwoIcon,
 } from 'native-base';
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
 
 function SigninScreen() {
   const auth = getAuth();
+  const toast = useToast();
 
   const [formInputs, setFormInputs] = useState({ email: '', password: '' });
 
@@ -28,14 +30,25 @@ function SigninScreen() {
       .then((userCredential) => {
         // Signed in
         const { user } = userCredential;
-        console.log(user);
+        toast.show({
+          title: 'Zalogowano!',
+          description: `Poprawnie zalogowano jako ${user?.email}`,
+        });
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
-        // ..
+      .catch(() => {
+        if (!toast.isActive('signin-error')) {
+          toast.show({
+            id: 'signin-error',
+            render: () => (
+              <Box bg="red.500" px="4" py="2" rounded="md" mb={5}>
+                <Text color="white" fontSize="lg" px="2">
+                  <WarningTwoIcon color="white" size="sm" />
+                  Wystąpił błąd podczas logowania!
+                </Text>
+              </Box>
+            ),
+          });
+        }
       });
   };
 
@@ -83,9 +96,7 @@ function SigninScreen() {
             </Link>
           </FormControl>
           <Button
-            onPress={() => {
-              return signin(formInputs.email, formInputs.password);
-            }}
+            onPress={() => signin(formInputs.email, formInputs.password)}
             mt="2"
             colorScheme="indigo">
             Sign in
