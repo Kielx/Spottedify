@@ -8,11 +8,13 @@ import PostDetailsScreen from '../screens/PostDetailsScreen';
 import Signup from '../screens/SignupScreen';
 import SigninScreen from '../screens/SigninScreen';
 import { AuthContext } from '../utils/AuthStateListener';
+import ResetPassword from '../screens/ResetPassword';
 
 export type RootStackParamList = {
   Home: undefined;
   Signup: undefined;
   Signin: undefined;
+  ResetPassword: undefined;
   Details: {
     post: {
       title: string;
@@ -55,6 +57,7 @@ function RootStack() {
         <>
           <Stack.Screen name="Signin" component={SigninScreen} />
           <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} />
         </>
       ) : (
         <Stack.Screen name="Details" component={PostDetailsScreen} />

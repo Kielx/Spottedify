@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
 import {
   Box,
   Text,
@@ -14,8 +17,12 @@ import {
   WarningTwoIcon,
 } from 'native-base';
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { RootStackParamList } from '../stacks/RootStack';
+
+type SigninScreenProp = StackNavigationProp<RootStackParamList, 'Signin'>;
 
 function SigninScreen() {
+  const navigation = useNavigation<SigninScreenProp>();
   const auth = getAuth();
   const toast = useToast();
 
@@ -90,7 +97,9 @@ function SigninScreen() {
                 fontWeight: '500',
                 color: 'green.400',
               }}
-              href="/test"
+              onPress={() => {
+                navigation.navigate('ResetPassword');
+              }}
               alignSelf="flex-end"
               mt="1">
               Zapomniałeś hasła?
