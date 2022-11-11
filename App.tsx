@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { NativeBaseProvider, extendTheme } from 'native-base';
 import AuthStateListener from './utils/AuthStateListener';
 import RootStack from './stacks/RootStack';
+import BottomPanel from './components/BottomPanel';
 
 // Define the config
 const config = {
@@ -23,6 +24,7 @@ export default function App() {
       <AuthStateListener>
         <NavigationContainer>
           <RootStack />
+          <BottomPanel />
         </NavigationContainer>
       </AuthStateListener>
     </NativeBaseProvider>

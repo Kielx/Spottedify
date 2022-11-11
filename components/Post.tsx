@@ -14,7 +14,7 @@ function Post({ post }: DocumentData) {
     <Box
       key={post.id}
       _light={{ bg: 'green.300', color: 'white' }}
-      _dark={{ bg: 'light.700', color: 'white' }}
+      _dark={{ bg: 'light.600', color: 'white' }}
       p="4"
       my="4"
       rounded="md"
@@ -23,7 +23,7 @@ function Post({ post }: DocumentData) {
         <Text pt="1" fontWeight="bold" fontSize="xl">
           {post.title}
         </Text>
-        <Text fontSize="sm" color="gray.500">
+        <Text fontSize="sm" color="gray.500" _dark={{ color: 'gray.400' }}>
           {post.date.toDate().toLocaleDateString('pl-PL')} -{post.location}
         </Text>
         <Box py="1">{post.description}</Box>

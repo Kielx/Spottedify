@@ -96,7 +96,7 @@ function SigninScreen() {
               _text={{
                 fontSize: 'xs',
                 fontWeight: '500',
-                color: 'green.400',
+                color: 'primary.600',
               }}
               onPress={() => {
                 navigation.navigate('ResetPassword');
@@ -106,10 +106,7 @@ function SigninScreen() {
               Zapomniałeś hasła?
             </Link>
           </FormControl>
-          <Button
-            onPress={() => signin(formInputs.email, formInputs.password)}
-            mt="2"
-            colorScheme="green">
+          <Button onPress={() => signin(formInputs.email, formInputs.password)} mt="2">
             Zaloguj się
           </Button>
           <HStack mt="6" justifyContent="center">
@@ -126,7 +123,7 @@ function SigninScreen() {
                 navigation.navigate('Signup');
               }}
               _text={{
-                color: 'green.400',
+                color: 'primary.600',
                 fontWeight: 'medium',
                 fontSize: 'sm',
               }}>
