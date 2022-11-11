@@ -25,6 +25,7 @@ function SigninScreen() {
   const navigation = useNavigation<SignupScreen>();
   const auth = getAuth();
   const toast = useToast();
+  const toastId = 'signup-error';
 
   const [formInputs, setFormInputs] = useState({ email: '', password: '' });
 
@@ -44,7 +45,7 @@ function SigninScreen() {
       .catch(() => {
         if (!toast.isActive('signup-error')) {
           toast.show({
-            id: 'signup-error',
+            id: toastId,
             placement: 'top',
             render: () => (
               <Box bg="red.500" px="4" py="2" rounded="md" mb={5}>
