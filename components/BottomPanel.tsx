@@ -7,6 +7,7 @@ import { signOut } from 'firebase/auth';
 import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
 import { auth } from '../firebaseConfig';
+import AddNewPostButton from './AddNewPostButton';
 
 type bottomPanelProps = StackNavigationProp<RootStackParamList>;
 
@@ -71,21 +72,24 @@ function BottomPanel() {
   );
 
   const loggedInItems = (
-    <Pressable
-      opacity={selected === 0 ? 1 : 0.5}
-      py="3"
-      flex={1}
-      onPress={() => {
-        setSelected(0);
-        signOut(auth);
-      }}>
-      <Center>
-        <Icon mb="1" as={<MaterialCommunityIcons name="logout" />} color="white" size="sm" />
-        <Text color="white" fontSize="12">
-          Wyloguj się
-        </Text>
-      </Center>
-    </Pressable>
+    <>
+      <AddNewPostButton selected={1} />
+      <Pressable
+        opacity={selected === 0 ? 1 : 0.5}
+        py="3"
+        flex={1}
+        onPress={() => {
+          setSelected(0);
+          signOut(auth);
+        }}>
+        <Center>
+          <Icon mb="1" as={<MaterialCommunityIcons name="logout" />} color="white" size="sm" />
+          <Text color="white" fontSize="12">
+            Wyloguj się
+          </Text>
+        </Center>
+      </Pressable>
+    </>
   );
 
   return (
