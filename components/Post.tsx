@@ -3,7 +3,7 @@ import { Box, Text, FavouriteIcon, Flex, Button } from 'native-base';
 import { DocumentData } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../App';
+import { RootStackParamList } from '../stacks/RootStack';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -12,6 +12,7 @@ function Post({ post }: DocumentData) {
 
   return (
     <Box
+      key={post.id}
       _light={{ bg: 'green.300', color: 'white' }}
       _dark={{ bg: 'light.700', color: 'white' }}
       p="4"

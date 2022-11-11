@@ -2,7 +2,7 @@ import { Fab , Modal, Button, Stack, Input, TextArea } from 'native-base';
 
 import React from 'react';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
-import db from '../firebaseConfig';
+import { db } from '../firebaseConfig';
 
 function AddNewPostButton() {
   const [modalVisible, setModalVisible] = React.useState(false);

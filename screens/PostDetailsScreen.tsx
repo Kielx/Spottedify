@@ -2,7 +2,7 @@ import { Text, Heading, VStack } from 'native-base';
 import React from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import { RootStackParamList } from '../stacks/RootStack';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 

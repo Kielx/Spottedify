@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView } from 'native-base';
 import { collection, DocumentData, onSnapshot, query, orderBy } from 'firebase/firestore';
-import db from '../firebaseConfig';
+import { db } from '../firebaseConfig';
 import Post from './Post';
 import { verticalScale, horizontalScale } from '../utils/Metrics';
 
