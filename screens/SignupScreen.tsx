@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -18,10 +18,12 @@ import {
 } from 'native-base';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { RootStackParamList } from '../stacks/RootStack';
+import { AppContext } from '../context/AppContext';
 
 type SignupScreen = StackNavigationProp<RootStackParamList, 'Signup'>;
 
 function SigninScreen() {
+  const { setBottomPanelSelectedItem } = useContext(AppContext);
   const navigation = useNavigation<SignupScreen>();
   const auth = getAuth();
   const toast = useToast();
@@ -41,6 +43,8 @@ function SigninScreen() {
           title: 'Poprawnie stworzono nowe konto!',
           description: `Możesz teraz korzystać z wszystkich funkcji aplikacji.`,
         });
+        navigation.navigate('Home');
+        setBottomPanelSelectedItem(0);
       })
       .catch(() => {
         if (!toast.isActive('signup-error')) {
@@ -120,6 +124,7 @@ function SigninScreen() {
             <Link
               onPress={() => {
                 navigation.navigate('Signin');
+                setBottomPanelSelectedItem(2);
               }}
               _text={{
                 color: 'primary.600',
