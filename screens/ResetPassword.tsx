@@ -88,7 +88,7 @@ function ResetPassword() {
               resetPassword(formInputs.email);
             }}
             mt="2">
-            Zaloguj się
+            Wyslij wiadomość z przypomnieniem
           </Button>
         </VStack>
       </Box>
