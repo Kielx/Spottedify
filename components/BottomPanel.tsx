@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text, Icon, HStack, Center, Pressable } from 'native-base';
+import { Text, Icon, HStack, Center, Pressable, useToast } from 'native-base';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -13,6 +13,7 @@ import AddNewPostButton from './AddNewPostButton';
 type bottomPanelProps = StackNavigationProp<RootStackParamList>;
 
 function BottomPanel() {
+  const toast = useToast();
   const { currentUser } = useContext(AuthContext);
   const { bottomPanelSelectedItem, setBottomPanelSelectedItem } = useContext(AppContext);
   const navigation: bottomPanelProps = useNavigation();
@@ -78,14 +79,19 @@ function BottomPanel() {
 
   const loggedInItems = (
     <>
-      <AddNewPostButton selected={1} />
+      <AddNewPostButton />
       <Pressable
-        opacity={bottomPanelSelectedItem === 0 ? 1 : 0.5}
+        opacity={0.5}
         py="3"
         flex={1}
         onPress={() => {
           setBottomPanelSelectedItem(0);
           signOut(auth);
+          toast.show({
+            title: 'Poprawnie wylogowano',
+            placement: 'top',
+            duration: 3000,
+          });
         }}>
         <Center>
           <Icon mb="1" as={<MaterialCommunityIcons name="logout" />} color="white" size="sm" />

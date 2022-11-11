@@ -4,11 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
-type Props = {
-  selected: number;
-};
-
-function AddNewPostButton({ selected }: Props) {
+function AddNewPostButton() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [newPost, setNewPost] = React.useState({
     title: '',
@@ -77,7 +73,7 @@ function AddNewPostButton({ selected }: Props) {
         </Modal.Content>
       </Modal>
       <Pressable
-        opacity={selected === 0 ? 1 : 0.5}
+        opacity={modalVisible === true ? 1 : 0.5}
         py="3"
         flex={1}
         onPress={() => {
