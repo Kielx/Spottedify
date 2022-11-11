@@ -9,7 +9,7 @@ import Signup from '../screens/SignupScreen';
 import SigninScreen from '../screens/SigninScreen';
 import { AuthContext } from '../utils/AuthStateListener';
 import ResetPassword from '../screens/ResetPassword';
-
+import HeaderNavigateBackButton from '../components/HeaderNavigateBackButton';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -29,12 +29,17 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// Functions to prevent eslint error of declaring component inside parent component
 function ToggleDarkModeComponent() {
   return <ToggleDarkMode />;
 }
 
 function HeaderComponent() {
   return <Header />;
+}
+
+function NavigateBackButtonComponent() {
+  return <HeaderNavigateBackButton />;
 }
 
 function RootStack() {
@@ -56,9 +61,27 @@ function RootStack() {
       />
       {!currentUser ? (
         <>
-          <Stack.Screen name="Signin" component={SigninScreen} />
-          <Stack.Screen name="Signup" component={Signup} />
-          <Stack.Screen name="ResetPassword" component={ResetPassword} />
+          <Stack.Screen
+            name="Signin"
+            component={SigninScreen}
+            options={{
+              headerLeft: NavigateBackButtonComponent,
+            }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{
+              headerLeft: NavigateBackButtonComponent,
+            }}
+          />
+          <Stack.Screen
+            name="ResetPassword"
+            component={ResetPassword}
+            options={{
+              headerLeft: NavigateBackButtonComponent,
+            }}
+          />
         </>
       ) : (
         <Stack.Screen name="Details" component={PostDetailsScreen} />
