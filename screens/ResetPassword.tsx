@@ -87,9 +87,8 @@ function ResetPassword() {
             onPress={() => {
               resetPassword(formInputs.email);
             }}
-            mt="2"
-            colorScheme="green">
-            Zaloguj się
+            mt="2">
+            Wyslij wiadomość z przypomnieniem
           </Button>
         </VStack>
       </Box>

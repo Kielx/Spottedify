@@ -1,6 +1,6 @@
-import { Fab , Modal, Button, Stack, Input, TextArea } from 'native-base';
-
 import React from 'react';
+import { Pressable, Center, Modal, Button, Stack, Input, TextArea, Icon, Text } from 'native-base';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
@@ -72,7 +72,20 @@ function AddNewPostButton() {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
-      <Fab shadow={2} size="sm" label="Dodaj ogłoszenie" onPress={() => setModalVisible(true)} />
+      <Pressable
+        opacity={modalVisible === true ? 1 : 0.5}
+        py="3"
+        flex={1}
+        onPress={() => {
+          setModalVisible(true);
+        }}>
+        <Center>
+          <Icon mb="1" as={<MaterialCommunityIcons name="logout" />} color="white" size="sm" />
+          <Text color="white" fontSize="12">
+            Dodaj ogłoszenie
+          </Text>
+        </Center>
+      </Pressable>
     </>
   );
 }

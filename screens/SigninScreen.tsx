@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -18,10 +18,12 @@ import {
 } from 'native-base';
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { RootStackParamList } from '../stacks/RootStack';
+import { AppContext } from '../context/AppContext';
 
 type SigninScreenProp = StackNavigationProp<RootStackParamList, 'Signin'>;
 
 function SigninScreen() {
+  const { setBottomPanelSelectedItem } = useContext(AppContext);
   const navigation = useNavigation<SigninScreenProp>();
   const auth = getAuth();
   const toast = useToast();
@@ -42,6 +44,8 @@ function SigninScreen() {
           title: 'Zalogowano!',
           description: `Poprawnie zalogowano jako ${user?.email}`,
         });
+        navigation.navigate('Home');
+        setBottomPanelSelectedItem(0);
       })
       .catch(() => {
         if (!toast.isActive('signin-error')) {
@@ -96,7 +100,7 @@ function SigninScreen() {
               _text={{
                 fontSize: 'xs',
                 fontWeight: '500',
-                color: 'green.400',
+                color: 'primary.600',
               }}
               onPress={() => {
                 navigation.navigate('ResetPassword');
@@ -106,10 +110,7 @@ function SigninScreen() {
               Zapomniałeś hasła?
             </Link>
           </FormControl>
-          <Button
-            onPress={() => signin(formInputs.email, formInputs.password)}
-            mt="2"
-            colorScheme="green">
+          <Button onPress={() => signin(formInputs.email, formInputs.password)} mt="2">
             Zaloguj się
           </Button>
           <HStack mt="6" justifyContent="center">
@@ -124,9 +125,10 @@ function SigninScreen() {
             <Link
               onPress={() => {
                 navigation.navigate('Signup');
+                setBottomPanelSelectedItem(1);
               }}
               _text={{
-                color: 'green.400',
+                color: 'primary.600',
                 fontWeight: 'medium',
                 fontSize: 'sm',
               }}>
