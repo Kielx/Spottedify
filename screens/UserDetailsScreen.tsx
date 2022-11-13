@@ -4,7 +4,7 @@ import { AuthContext } from '../utils/AuthStateListener';
 
 function UserDetailsScreen() {
   const { userProfile, currentUser } = useContext(AuthContext);
-  console.log(currentUser);
+
   return (
     <VStack flex={1} space={3} alignItems="center" justifyContent="center">
       <Avatar
