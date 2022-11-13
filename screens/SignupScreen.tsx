@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { setDoc, doc } from 'firebase/firestore';
 
 import {
   Box,
@@ -19,8 +20,15 @@ import {
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { RootStackParamList } from '../stacks/RootStack';
 import { AppContext } from '../context/AppContext';
+import { db } from '../firebaseConfig';
 
 type SignupScreen = StackNavigationProp<RootStackParamList, 'Signup'>;
+
+const addNewUserProfile = async (uid: string, name: string) => {
+  await setDoc(doc(db, 'users', uid), {
+    name,
+  });
+};
 
 function SigninScreen() {
   const { setBottomPanelSelectedItem } = useContext(AppContext);
@@ -29,15 +37,17 @@ function SigninScreen() {
   const toast = useToast();
   const toastId = 'signup-error';
 
-  const [formInputs, setFormInputs] = useState({ email: '', password: '' });
+  const [formInputs, setFormInputs] = useState({ email: '', password: '', name: '' });
 
   const handleChange = (name: string, value: string) => {
     setFormInputs({ ...formInputs, [name]: value });
   };
 
-  const signup = async (email: string, password: string) => {
+  const signup = async (email: string, password: string, name: string) => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
+      .then((userCredential) => {
+        const { user } = userCredential;
+        addNewUserProfile(user?.uid, name);
         // Signed in
         toast.show({
           title: 'Poprawnie stworzono nowe konto!',
@@ -93,6 +103,10 @@ function SigninScreen() {
             <Input type="email" onChangeText={(value) => handleChange('email', value)} />
           </FormControl>
           <FormControl>
+            <FormControl.Label>Nazwa użytkownika</FormControl.Label>
+            <Input onChangeText={(value) => handleChange('name', value)} />
+          </FormControl>
+          <FormControl>
             <FormControl.Label>Hasło</FormControl.Label>
             <Input type="password" onChangeText={(value) => handleChange('password', value)} />
             <Link
@@ -109,7 +123,9 @@ function SigninScreen() {
               Masz już konto, ale zapomniałeś hasła?
             </Link>
           </FormControl>
-          <Button onPress={() => signup(formInputs.email, formInputs.password)} mt="2">
+          <Button
+            onPress={() => signup(formInputs.email, formInputs.password, formInputs.name)}
+            mt="2">
             Stwórz konto
           </Button>
           <HStack mt="6" justifyContent="center">
