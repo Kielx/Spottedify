@@ -1,5 +1,5 @@
 import { Text, Heading, VStack } from 'native-base';
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../stacks/RootStack';
@@ -9,7 +9,10 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 function PostDetailsScreen({ route }: Props) {
   const navigation = useNavigation();
   const { post } = route.params;
-  navigation.setOptions({ headerTitle: post.title });
+
+  useEffect(() => {
+    navigation.setOptions({ headerTitle: post.title });
+  }, []);
 
   return (
     <VStack
