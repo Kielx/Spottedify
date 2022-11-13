@@ -10,12 +10,14 @@ import SigninScreen from '../screens/SigninScreen';
 import { AuthContext } from '../utils/AuthStateListener';
 import ResetPassword from '../screens/ResetPassword';
 import HeaderNavigateBackButton from '../components/HeaderNavigateBackButton';
+import UserDetailsScreen from '../screens/UserDetailsScreen';
 
 export type RootStackParamList = {
   Home: undefined;
   Signup: undefined;
   Signin: undefined;
   ResetPassword: undefined;
+  UserDetails: undefined;
   Details: {
     post: {
       title: string;
@@ -84,7 +86,10 @@ function RootStack() {
           />
         </>
       ) : (
-        <Stack.Screen name="Details" component={PostDetailsScreen} />
+        <>
+          <Stack.Screen name="Details" component={PostDetailsScreen} />
+          <Stack.Screen name="UserDetails" component={UserDetailsScreen} />
+        </>
       )}
     </Stack.Navigator>
   );

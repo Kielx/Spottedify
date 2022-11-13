@@ -81,6 +81,21 @@ function BottomPanel() {
     <>
       <AddNewPostButton />
       <Pressable
+        opacity={bottomPanelSelectedItem === 2 ? 1 : 0.6}
+        py="2"
+        flex={1}
+        onPress={() => {
+          setBottomPanelSelectedItem(2);
+          navigation.navigate('UserDetails');
+        }}>
+        <Center>
+          <Icon mb="1" as={<MaterialCommunityIcons name="account-box" />} color="white" size="sm" />
+          <Text color="white" fontSize="12">
+            Twój Profil
+          </Text>
+        </Center>
+      </Pressable>
+      <Pressable
         opacity={0.5}
         py="3"
         flex={1}

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { doc, onSnapshot, query } from 'firebase/firestore';
 import PropTypes from 'prop-types';
-import { auth } from '../firebaseConfig';
+import { auth, db } from '../firebaseConfig';
 
 export const AuthContext = React.createContext();
 
@@ -11,7 +11,13 @@ function AuthStateListener({ children }) {
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState(null);
   auth.languageCode = 'pl';
-  const db = getDatabase();
+
+  const getUserProfile = async (userId) => {
+    const q = query(doc(db, `users/${userId}`));
+    onSnapshot(q, (document) => {
+      setUserProfile(document.data());
+    });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -20,11 +26,7 @@ function AuthStateListener({ children }) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         setCurrentUser(user);
-        const userProfileRef = ref(db, `users/${user.uid}`);
-        onValue(userProfileRef, (snapshot) => {
-          setUserProfile(snapshot.val());
-          setLoading(false);
-        });
+        getUserProfile(user.uid);
       } else {
         // User is signed out
         // ...
