@@ -14,6 +14,8 @@ function Post({ post }: DocumentData) {
   const toastId = 'signin-error';
   const navigation = useNavigation<homeScreenProp>();
 
+  const postAuthor = post.authorId === currentUser?.uid ? 'Ty' : post.authorName;
+
   return (
     <Box
       key={post.id}
@@ -28,8 +30,12 @@ function Post({ post }: DocumentData) {
           {post.title}
         </Text>
         <Text fontSize="sm" color="gray.500" _dark={{ color: 'gray.400' }}>
-          {post.date.toDate().toLocaleDateString('pl-PL')} -{post.location}
+          {postAuthor}
         </Text>
+        <Text fontSize="sm" color="gray.500" _dark={{ color: 'gray.400' }}>
+          {post.date.toDate().toLocaleDateString('pl-PL')} - {post.location}
+        </Text>
+
         <Box py="1">{post.description}</Box>
         <Flex flexDirection="row">
           {post.likes}
