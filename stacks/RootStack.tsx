@@ -87,8 +87,20 @@ function RootStack() {
         </>
       ) : (
         <>
-          <Stack.Screen name="Details" component={PostDetailsScreen} />
-          <Stack.Screen name="UserDetails" component={UserDetailsScreen} />
+          <Stack.Screen
+            name="Details"
+            component={PostDetailsScreen}
+            options={{
+              headerLeft: NavigateBackButtonComponent,
+            }}
+          />
+          <Stack.Screen
+            name="UserDetails"
+            component={UserDetailsScreen}
+            options={{
+              headerLeft: NavigateBackButtonComponent,
+            }}
+          />
         </>
       )}
     </Stack.Navigator>

@@ -82,7 +82,7 @@ function AddNewPostButton() {
         <Center>
           <Icon mb="1" as={<MaterialCommunityIcons name="plus-box" />} color="white" size="sm" />
           <Text color="white" fontSize="12">
-            Dodaj ogłoszenie
+            Dodaj
           </Text>
         </Center>
       </Pressable>

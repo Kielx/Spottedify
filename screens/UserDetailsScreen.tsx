@@ -6,7 +6,14 @@ function UserDetailsScreen() {
   const { userProfile, currentUser } = useContext(AuthContext);
 
   return (
-    <VStack flex={1} space={3} alignItems="center" justifyContent="center">
+    <VStack
+      _dark={{
+        bg: 'coolGray.700',
+      }}
+      flex={1}
+      space={3}
+      alignItems="center"
+      justifyContent="center">
       <Avatar
         size="2xl"
         bg="amber.500"
