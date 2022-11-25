@@ -40,7 +40,7 @@ function BottomPanel() {
             size="sm"
           />
           <Text color="white" fontSize="12">
-            Home
+            Główna
           </Text>
         </Center>
       </Pressable>
@@ -79,7 +79,38 @@ function BottomPanel() {
 
   const loggedInItems = (
     <>
+      <Pressable
+        opacity={bottomPanelSelectedItem === 0 ? 1 : 0.6}
+        py="2"
+        flex={1}
+        onPress={() => {
+          setBottomPanelSelectedItem(0);
+          navigation.navigate('Home');
+        }}>
+        <Center>
+          <Icon mb="1" as={<MaterialCommunityIcons name="home" />} color="white" size="sm" />
+          <Text color="white" fontSize="12">
+            Główna
+          </Text>
+        </Center>
+      </Pressable>
       <AddNewPostButton />
+
+      <Pressable
+        opacity={bottomPanelSelectedItem === 2 ? 1 : 0.6}
+        py="2"
+        flex={1}
+        onPress={() => {
+          setBottomPanelSelectedItem(2);
+          navigation.navigate('UserDetails');
+        }}>
+        <Center>
+          <Icon mb="1" as={<MaterialCommunityIcons name="account-box" />} color="white" size="sm" />
+          <Text color="white" fontSize="12">
+            Profil
+          </Text>
+        </Center>
+      </Pressable>
       <Pressable
         opacity={0.5}
         py="3"

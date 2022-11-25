@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Pressable, Center, Modal, Button, Stack, Input, TextArea, Icon, Text } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import { AuthContext } from '../utils/AuthStateListener';
 
 function AddNewPostButton() {
+  const { currentUser, userProfile } = useContext(AuthContext);
+
   const [modalVisible, setModalVisible] = React.useState(false);
   const [newPost, setNewPost] = React.useState({
     title: '',
@@ -23,6 +26,13 @@ function AddNewPostButton() {
       location: newPost.location,
       date: Timestamp.fromDate(new Date()),
       likes: 0,
+      authorId: currentUser?.uid,
+      authorName: userProfile?.name,
+    });
+    setNewPost({
+      title: '',
+      description: '',
+      location: '',
     });
     setModalVisible(false);
   };
@@ -80,9 +90,9 @@ function AddNewPostButton() {
           setModalVisible(true);
         }}>
         <Center>
-          <Icon mb="1" as={<MaterialCommunityIcons name="logout" />} color="white" size="sm" />
+          <Icon mb="1" as={<MaterialCommunityIcons name="plus-box" />} color="white" size="sm" />
           <Text color="white" fontSize="12">
-            Dodaj ogłoszenie
+            Dodaj
           </Text>
         </Center>
       </Pressable>
