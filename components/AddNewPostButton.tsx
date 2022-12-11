@@ -61,6 +61,9 @@ function AddNewPostButton() {
                 onChangeText={(value) => handleChange('description', value)}
               />
             </Stack>
+            <Button>
+              Dodaj zdjęcie
+            </Button>
           </Modal.Body>
           <Modal.Footer>
             <Button.Group space={2}>
@@ -70,13 +73,13 @@ function AddNewPostButton() {
                 onPress={() => {
                   setModalVisible(false);
                 }}>
-                Cancel
+                Anuluj
               </Button>
               <Button
                 onPress={() => {
                   addNewPost();
                 }}>
-                Save
+                Zapisz
               </Button>
             </Button.Group>
           </Modal.Footer>
