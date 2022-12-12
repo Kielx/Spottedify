@@ -25,6 +25,7 @@ function AddNewPostButton() {
       description: newPost.description,
       location: newPost.location,
       date: Timestamp.fromDate(new Date()),
+      likesIdUser:[],
       likes: 0,
       authorId: currentUser?.uid,
       authorName: userProfile?.name,

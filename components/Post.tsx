@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { Box, Text, FavouriteIcon, Flex, Button, useToast, WarningIcon } from 'native-base';
-import { DocumentData } from 'firebase/firestore';
+import {  DocumentData, doc, arrayUnion, updateDoc} from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
-
+import { db } from '../firebaseConfig';
+import {  TouchableOpacity } from "react-native";
+import { FieldValue } from "firebase/firestore";
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 function Post({ post }: DocumentData) {
@@ -39,7 +41,15 @@ function Post({ post }: DocumentData) {
         <Box py="1">{post.description}</Box>
         <Flex flexDirection="row">
           {post.likes}
+                <TouchableOpacity onPress={async ()=>{
+                      const docRef = doc(db, "publicPosts", post.id);
+                       await updateDoc(docRef , {
+                              likesIdUser: arrayUnion(currentUser?.uid)
+                          });
+                }
+                }>
           <FavouriteIcon size="5" mt="0.5" color="red.700" ml="2" />
+           </TouchableOpacity>
         </Flex>
       </Box>
       <Button
