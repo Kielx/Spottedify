@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Box, Text, FavouriteIcon, Flex, Button, useToast, WarningIcon } from 'native-base';
-import {  DocumentData, doc, arrayUnion, updateDoc} from 'firebase/firestore';
+import {  DocumentData, doc, arrayUnion, updateDoc,getDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../stacks/RootStack';
@@ -46,6 +46,16 @@ function Post({ post }: DocumentData) {
                        await updateDoc(docRef , {
                               likesIdUser: arrayUnion(currentUser?.uid)
                           });
+                          const docSnap = await getDoc(docRef);
+                          if (docSnap.exists()) {
+                            await updateDoc(docRef , {
+                                                          likes: docSnap.data().likesIdUser.length
+                                                      });
+                          } else {
+                            console.log("No such document!");
+                          }
+
+
                 }
                 }>
           <FavouriteIcon size="5" mt="0.5" color="red.700" ml="2" />
