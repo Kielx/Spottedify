@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Box, Text, FavouriteIcon, Flex, Button, useToast, WarningIcon } from 'native-base';
-import {  DocumentData, doc, arrayUnion, updateDoc,getDoc } from 'firebase/firestore';
+import {  DocumentData, doc, arrayUnion,arrayRemove , updateDoc,getDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../stacks/RootStack';
@@ -15,7 +15,6 @@ function Post({ post }: DocumentData) {
   const toast = useToast();
   const toastId = 'signin-error';
   const navigation = useNavigation<homeScreenProp>();
-
   const postAuthor = post.authorId === currentUser?.uid ? 'Ty' : post.authorName;
 
   return (
@@ -43,18 +42,23 @@ function Post({ post }: DocumentData) {
           {post.likes}
                 <TouchableOpacity onPress={async ()=>{
                       const docRef = doc(db, "publicPosts", post.id);
-                       await updateDoc(docRef , {
-                              likesIdUser: arrayUnion(currentUser?.uid)
-                          });
-                          const docSnap = await getDoc(docRef);
-                          if (docSnap.exists()) {
+                      const docSnap = await getDoc(docRef);
+                        if(docSnap.data().likesIdUser.includes(currentUser?.uid)!=true){
+                          updateDoc(docRef , {
+                                        likesIdUser: arrayUnion(currentUser?.uid)
+                                      });
+
+                        }
+                        else{
+                         updateDoc(docRef , {
+                                         likesIdUser: arrayRemove(currentUser?.uid)
+                                         });
+
+
+                        }
                             await updateDoc(docRef , {
                                                           likes: docSnap.data().likesIdUser.length
                                                       });
-                          } else {
-                            console.log("No such document!");
-                          }
-
 
                 }
                 }>
