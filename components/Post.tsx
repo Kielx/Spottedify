@@ -3,10 +3,11 @@ import { Box, Text, FavouriteIcon, Flex, Button, useToast, WarningIcon } from 'n
 import {  DocumentData, doc, arrayUnion,arrayRemove , updateDoc,getDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import {  TouchableOpacity } from "react-native";
 import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
 import { db } from '../firebaseConfig';
-import {  TouchableOpacity } from "react-native";
+
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 function Post({ post }: DocumentData) {
@@ -17,9 +18,8 @@ function Post({ post }: DocumentData) {
   const postAuthor = post.authorId === currentUser?.uid ? 'Ty' : post.authorName;
    const addLike=async()=>{
                           const docRef = doc(db, "publicPosts", post.id);
-                          console.log("xd")
                          const docSnap = await getDoc(docRef);
-                         if(docSnap.data().likesIdUser.includes(currentUser?.uid)!=true){
+                         if(docSnap.data().likesIdUser.includes(currentUser?.uid)!==true){
                         updateDoc(docRef , {
                         likesIdUser: arrayUnion(currentUser?.uid),
                          likes: docSnap.data().likesIdUser.length
