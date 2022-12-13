@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Box, Text, FavouriteIcon, Flex, Button, useToast, WarningIcon } from 'native-base';
 import {  DocumentData, doc, arrayUnion,arrayRemove , updateDoc,getDoc } from 'firebase/firestore';
+import { collection, query, where } from "firebase/firestore";
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../stacks/RootStack';
@@ -16,6 +17,26 @@ function Post({ post }: DocumentData) {
   const toastId = 'signin-error';
   const navigation = useNavigation<homeScreenProp>();
   const postAuthor = post.authorId === currentUser?.uid ? 'Ty' : post.authorName;
+   const addLike=async()=>{
+                          const docRef = doc(db, "publicPosts", post.id);
+                          console.log("xd")
+                         const docSnap = await getDoc(docRef);
+                         if(docSnap.data().likesIdUser.includes(currentUser?.uid)!=true){
+                        updateDoc(docRef , {
+                        likesIdUser: arrayUnion(currentUser?.uid),
+                         likes: docSnap.data().likesIdUser.length
+                        });
+
+                       }
+                       else{
+                       updateDoc(docRef , {
+                         likesIdUser: arrayRemove(currentUser?.uid),
+                          likes: docSnap.data().likesIdUser.length
+                        });
+
+
+                        }
+                        }
 
   return (
     <Box
@@ -40,27 +61,29 @@ function Post({ post }: DocumentData) {
         <Box py="1">{post.description}</Box>
         <Flex flexDirection="row">
           {post.likes}
-                <TouchableOpacity onPress={async ()=>{
-                      const docRef = doc(db, "publicPosts", post.id);
-                      const docSnap = await getDoc(docRef);
-                        if(docSnap.data().likesIdUser.includes(currentUser?.uid)!=true){
-                          updateDoc(docRef , {
-                                        likesIdUser: arrayUnion(currentUser?.uid)
-                                      });
+                <TouchableOpacity onPress={
+                          currentUser
+                            ? () => addLike()
+                            : () => {
+                                if (!toast.isActive('signin-error')) {
+                                  toast.show({
+                                    id: toastId,
+                                    placement: 'top',
+                                    render: () => (
+                                      <Box bg="warning.500" px="4" py="1" alignItems="center" rounded="md" mb={5}>
+                                        <Text color="white" fontSize="md" px="2" alignItems="center">
+                                          <WarningIcon color="white" pr="2" />
+                                          Musisz być zalogowany by wykonać tą czynność!
+                                        </Text>
+                                      </Box>
+                                    ),
+                                  });
+                                }
+                              }
 
-                        }
-                        else{
-                         updateDoc(docRef , {
-                                         likesIdUser: arrayRemove(currentUser?.uid)
-                                         });
 
 
-                        }
-                            await updateDoc(docRef , {
-                                                          likes: docSnap.data().likesIdUser.length
-                                                      });
 
-                }
                 }>
           <FavouriteIcon size="5" mt="0.5" color="red.700" ml="2" />
            </TouchableOpacity>
