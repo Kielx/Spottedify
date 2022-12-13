@@ -9,13 +9,7 @@ function RemovePostButton({ postr }: DocumentData) {
     const RemovePost = async () => {
 
         const docRef = doc(db, "publicPosts", postr.id);
-        deleteDoc(docRef)
-        .then(()=>{
-            window.location.reload();
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        deleteDoc(docRef);
 
         setModalVisible(false);
     };
