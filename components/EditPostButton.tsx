@@ -27,13 +27,7 @@ function EditPostButton({ poste }: DocumentData) {
             date: Timestamp.fromDate(new Date()),
         }
 
-        await updateDoc(docRef, data)
-            .then(docRef => {
-                window.location.reload();
-            })
-            .catch(error => {
-                error;
-            })
+        await updateDoc(docRef, data);
 
         setEditPost({
             title: '',
