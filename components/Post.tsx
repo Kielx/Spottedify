@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
 import { Box, Text, FavouriteIcon, Flex, Button, useToast, WarningIcon } from 'native-base';
 import {  DocumentData, doc, arrayUnion,arrayRemove , updateDoc,getDoc } from 'firebase/firestore';
-import { collection, query, where } from "firebase/firestore";
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
 import { db } from '../firebaseConfig';
 import {  TouchableOpacity } from "react-native";
-import { FieldValue } from "firebase/firestore";
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 function Post({ post }: DocumentData) {
