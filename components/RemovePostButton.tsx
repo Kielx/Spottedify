@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Modal, Button, Stack} from 'native-base';
 import {  DocumentData, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -11,7 +11,6 @@ function RemovePostButton({ postr }: DocumentData) {
         const docRef = doc(db, "publicPosts", postr.id);
         deleteDoc(docRef)
         .then(()=>{
-            console.log("usunięto");
             window.location.reload();
         })
         .catch(error => {
