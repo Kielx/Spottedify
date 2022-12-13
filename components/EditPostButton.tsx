@@ -28,11 +28,11 @@ function EditPostButton({ poste }: DocumentData) {
         }
 
         await updateDoc(docRef, data)
-            .then(() => {
+            .then(docRef => {
                 window.location.reload();
             })
             .catch(error => {
-                console.log(error);
+                error;
             })
 
         setEditPost({
@@ -54,17 +54,17 @@ function EditPostButton({ poste }: DocumentData) {
                         <Stack space={1} w="75%" maxW="300px" mx="auto">
                             <Input
                                 variant="outline"
-                                placeholder={poste.title}
+                                defaultValue={poste.title}
                                 onChangeText={(value) => handleChange('title', value)}
                             />
                             <Input
                                 variant="outline"
-                                placeholder={poste.location}
+                                defaultValue={poste.location}
                                 onChangeText={(value) => handleChange('location', value)}
                             />
                             <TextArea
                                 variant="outline"
-                                placeholder={poste.description}
+                                defaultValue={poste.description}
                                 onChangeText={(value) => handleChange('description', value)}
                             />
                             <Button>
