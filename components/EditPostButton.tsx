@@ -1,4 +1,4 @@
-import React, { useContext,useState} from 'react';
+import React, { useState} from 'react';
 import { Modal, Button, Stack, Input, TextArea } from 'native-base';
 import { Timestamp, DocumentData, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -21,15 +21,14 @@ function EditPostButton({ poste }: DocumentData) {
         const docRef = doc(db, "publicPosts", poste.id);
 
         const data = {
-            title: editPost.title != '' ? editPost.title : poste.title,
-            description: editPost.description != '' ? editPost.description : poste.description,
-            location: editPost.location != '' ? editPost.location : poste.location,
+            title: editPost.title !== '' ? editPost.title : poste.title,
+            description: editPost.description !== '' ? editPost.description : poste.description,
+            location: editPost.location !== '' ? editPost.location : poste.location,
             date: Timestamp.fromDate(new Date()),
         }
 
         await updateDoc(docRef, data)
-            .then(docRef => {
-                //console.log("zaktualizowane");
+            .then(() => {
                 window.location.reload();
             })
             .catch(error => {
@@ -45,10 +44,6 @@ function EditPostButton({ poste }: DocumentData) {
         setModalVisible(false);
     };
 
-
-
-
-    //console.log(post);
     return (
         <>
             <Modal isOpen={modalVisible} onClose={setModalVisible}>
@@ -72,10 +67,7 @@ function EditPostButton({ poste }: DocumentData) {
                                 placeholder={poste.description}
                                 onChangeText={(value) => handleChange('description', value)}
                             />
-                            <Button
-                                onPress={() => {
-                                    //setCameraVisible(true);
-                                }}>
+                            <Button>
                                 Dodaj zdjęcie
                             </Button>
                         </Stack>
