@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Box, Text, FavouriteIcon, Flex } from 'native-base';
 import { DocumentData } from 'firebase/firestore';
 import EditPostButton from './EditPostButton';
