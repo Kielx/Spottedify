@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import { AuthContext } from '../utils/AuthStateListener';
+import GetLocationButton from './GetLocationButton';
 
 function AddNewPostButton() {
   const { currentUser, userProfile } = useContext(AuthContext);
@@ -79,6 +80,7 @@ function AddNewPostButton() {
                 Save
               </Button>
             </Button.Group>
+            <GetLocationButton />
           </Modal.Footer>
         </Modal.Content>
       </Modal>
