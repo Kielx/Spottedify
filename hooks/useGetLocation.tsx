@@ -11,7 +11,7 @@ export default function GetLocationButton() {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        setErrorMsg('Brak dostępu do lokalizacji');
         return;
       }
 
@@ -21,12 +21,12 @@ export default function GetLocationButton() {
         const cit = await Location.reverseGeocodeAsync(loc.coords);
         setCity(cit[0].city);
       } catch (e) {
-        setErrorMsg('Unable to get location');
+        setErrorMsg('Nie udało się ustalić lokalizacji');
       }
     })();
   }, []);
 
-  let text = 'Waiting..';
+  let text = 'Ustalanie lokalizacji, spróbuj ponownie...';
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {

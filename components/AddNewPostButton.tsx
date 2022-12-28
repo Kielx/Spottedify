@@ -1,5 +1,16 @@
 import React, { useContext } from 'react';
-import { Pressable, Center, Modal, Button, Stack, Input, TextArea, Icon, Text } from 'native-base';
+import {
+  Pressable,
+  Center,
+  Modal,
+  Button,
+  Stack,
+  Input,
+  TextArea,
+  Icon,
+  Text,
+  HStack,
+} from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -8,7 +19,6 @@ import GetLocationButton from './GetLocationButton';
 
 function AddNewPostButton() {
   const { currentUser, userProfile } = useContext(AuthContext);
-
   const [modalVisible, setModalVisible] = React.useState(false);
   const [newPost, setNewPost] = React.useState({
     title: '',
@@ -51,11 +61,17 @@ function AddNewPostButton() {
                 placeholder="Tytuł nowego ogłoszenia"
                 onChangeText={(value) => handleChange('title', value)}
               />
-              <Input
-                variant="outline"
-                placeholder="Lokalizacja"
-                onChangeText={(value) => handleChange('location', value)}
-              />
+              <HStack>
+                <Input
+                  flex={1}
+                  variant="outline"
+                  placeholder="Lokalizacja"
+                  onChangeText={(value) => handleChange('location', value)}
+                  value={newPost.location}
+                />
+                <GetLocationButton handleChange={handleChange} />
+              </HStack>
+
               <TextArea
                 variant="outline"
                 placeholder="Opis ogłoszenia"
@@ -80,7 +96,6 @@ function AddNewPostButton() {
                 Save
               </Button>
             </Button.Group>
-            <GetLocationButton />
           </Modal.Footer>
         </Modal.Content>
       </Modal>
