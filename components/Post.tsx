@@ -1,12 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Box, Text, FavouriteIcon, Flex, Button, useToast, WarningIcon } from 'native-base';
-import {  DocumentData, doc, arrayUnion,arrayRemove , updateDoc,getDoc,query, where,collection } from 'firebase/firestore';
+import { DocumentData } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import {  TouchableOpacity } from "react-native";
 import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
-import { db } from '../firebaseConfig';
 import LikeUser from './LikeUser';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;

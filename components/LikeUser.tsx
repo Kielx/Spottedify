@@ -1,18 +1,18 @@
 
 import React, { useContext } from 'react';
-import { Box, Text, FavouriteIcon,  Button, useToast, WarningIcon } from 'native-base';
-import { AuthContext } from '../utils/AuthStateListener';
-import { doc, getDoc, arrayUnion, arrayRemove, updateDoc } from '@firebase/firestore';
-import { db } from '../firebaseConfig';
+import { Box, Text, FavouriteIcon, useToast, WarningIcon } from 'native-base';
 import { TouchableOpacity } from "react-native";
+import { doc, arrayUnion, arrayRemove, updateDoc } from '@firebase/firestore';
+import { db } from '../firebaseConfig';
+import { AuthContext } from '../utils/AuthStateListener';
 
 function LikeUser({ post}) {
   const toast = useToast();
-  const postId=post.id;
-  const likesIdUser=post.likesIdUser;
+  const {id,likesIdUser}=post
+
   const toastId = 'signin-error';
   const { currentUser } = useContext(AuthContext);
-  const docRef = doc(db, 'publicPosts', postId);
+  const docRef = doc(db, 'publicPosts',id);
   let color="gray.400";
 if (likesIdUser.includes(currentUser?.uid)&&currentUser!==null) color="red.700";
   function toggleLike() {
