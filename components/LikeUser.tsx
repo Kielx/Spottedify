@@ -1,6 +1,6 @@
 
-import React, { useContext, useState, useEffect } from 'react';
-import { Box, Text, FavouriteIcon, Flex, Button, useToast, WarningIcon } from 'native-base';
+import React, { useContext } from 'react';
+import { Box, Text, FavouriteIcon,  Button, useToast, WarningIcon } from 'native-base';
 import { AuthContext } from '../utils/AuthStateListener';
 import { doc, getDoc, arrayUnion, arrayRemove, updateDoc } from '@firebase/firestore';
 import { db } from '../firebaseConfig';
