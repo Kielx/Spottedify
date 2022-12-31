@@ -1,20 +1,23 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import { Box, Text, FavouriteIcon, useToast, WarningIcon } from 'native-base';
-import { TouchableOpacity } from "react-native";
-import { doc, arrayUnion, arrayRemove, updateDoc } from '@firebase/firestore';
+import { TouchableOpacity } from 'react-native';
+import { doc, arrayUnion, arrayRemove, updateDoc, DocumentData } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import { AuthContext } from '../utils/AuthStateListener';
 
-function LikeUser({ post}) {
+function LikeUser({ post }: DocumentData) {
   const toast = useToast();
-  const {id,likesIdUser}=post
+  const { id, likesIdUser, likes } = post;
 
   const toastId = 'signin-error';
   const { currentUser } = useContext(AuthContext);
-  const docRef = doc(db, 'publicPosts',id);
-  let color="gray.400";
-if (likesIdUser.includes(currentUser?.uid)&&currentUser!==null) color="red.700";
+  const docRef = doc(db, 'publicPosts', id);
+  let color = 'gray.400';
+  if (currentUser && likesIdUser) {
+    if (likesIdUser.includes(currentUser?.uid)) {
+      color = 'red.500';
+    }
+  }
   function toggleLike() {
     if (likesIdUser.includes(currentUser?.uid)) {
       updateDoc(docRef, {
@@ -26,39 +29,34 @@ if (likesIdUser.includes(currentUser?.uid)&&currentUser!==null) color="red.700";
       });
     }
   }
-        updateDoc(docRef, {
-            likes: likesIdUser.length
-    });
+  updateDoc(docRef, {
+    likes: likesIdUser?.length || likes,
+  });
   return (
-    <TouchableOpacity onPress={
-      currentUser
-        ? () => toggleLike()
-         : () => {
-                        if (!toast.isActive('signin-error')) {
-                          toast.show({
-                            id: toastId,
-                            placement: 'top',
-                            render: () => (
-                              <Box bg="warning.500" px="4" py="1" alignItems="center" rounded="md" mb={5}>
-                                <Text color="white" fontSize="md" px="2" alignItems="center">
-                                  <WarningIcon color="white" pr="2" />
-                                  Musisz być zalogowany by wykonać tą czynność!
-                                </Text>
-                              </Box>
-                            ),
-                          });
-                        }
-                      }
-                                }>
-    <FavouriteIcon size="5" mt="0.5" ml="2" color={color} />
-      </TouchableOpacity>
+    <TouchableOpacity
+      onPress={
+        currentUser
+          ? () => toggleLike()
+          : () => {
+              if (!toast.isActive('signin-error')) {
+                toast.show({
+                  id: toastId,
+                  placement: 'top',
+                  render: () => (
+                    <Box bg="warning.500" px="4" py="1" alignItems="center" rounded="md" mb={5}>
+                      <Text color="white" fontSize="md" px="2" alignItems="center">
+                        <WarningIcon color="white" pr="2" />
+                        Musisz być zalogowany by wykonać tą czynność!
+                      </Text>
+                    </Box>
+                  ),
+                });
+              }
+            }
+      }>
+      <FavouriteIcon size="5" mt="0.5" ml="2" color={color} />
+    </TouchableOpacity>
   );
-
 }
-  LikeUser.propTypes = {
-    post: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      likesIdUser: PropTypes.arrayOf(PropTypes.string).isRequired,
-    }).isRequired,
-  };
+
 export default LikeUser;
