@@ -1,5 +1,5 @@
-
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { Box, Text, FavouriteIcon, useToast, WarningIcon } from 'native-base';
 import { TouchableOpacity } from "react-native";
 import { doc, arrayUnion, arrayRemove, updateDoc } from '@firebase/firestore';
@@ -53,6 +53,12 @@ if (likesIdUser.includes(currentUser?.uid)&&currentUser!==null) color="red.700";
     <FavouriteIcon size="5" mt="0.5" ml="2" color={color} />
       </TouchableOpacity>
   );
-}
 
+}
+  LikeUser.propTypes = {
+    post: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      likesIdUser: PropTypes.arrayOf(PropTypes.string).isRequired,
+    }).isRequired,
+  };
 export default LikeUser;

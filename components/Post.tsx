@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, Text, FavouriteIcon, Flex, Button, useToast, WarningIcon } from 'native-base';
+import { Box, Text, Flex, Button, useToast, WarningIcon } from 'native-base';
 import { DocumentData } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
