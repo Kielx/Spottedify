@@ -39,53 +39,52 @@ export default async function getCurrentCity() {
   if (loc) {
     const cit = await Location.reverseGeocodeAsync(loc.coords);
     city = cit[0].city;
-  }
+  } else {
+    /**
+     * The navigator.geolocation.getCurrentPosition method is designed to be used with callbacks,
+     * so it does not return a value or a promise. This means that it is not possible to use the await keyword with this method,
+     * or to chain it with other async/await operations.
+     * To be able to use await with navigator.geolocation.getCurrentPosition,
+     * the method must be wrapped in a promise. The promise is created using the Promise constructor,
+     * which takes two arguments: a function called the "executor function", and an optional "rejector function".
+     * The executor function is called with two arguments: resolve and reject.
+     * The resolve function is used to indicate that the promise has been fulfilled (i.e., it has succeeded),
+     * and the reject function is used to indicate that the promise has been rejected (i.e., it has failed).
+     * https://stackoverflow.com/questions/2707191/unable-to-cope-with-the-asynchronous-nature-of-navigator-geolocation
+     */
 
-  /**
-   * The navigator.geolocation.getCurrentPosition method is designed to be used with callbacks, 
-   * so it does not return a value or a promise. This means that it is not possible to use the await keyword with this method, 
-   * or to chain it with other async/await operations.
-   * To be able to use await with navigator.geolocation.getCurrentPosition, 
-   * the method must be wrapped in a promise. The promise is created using the Promise constructor, 
-   * which takes two arguments: a function called the "executor function", and an optional "rejector function". 
-   * The executor function is called with two arguments: resolve and reject. 
-   * The resolve function is used to indicate that the promise has been fulfilled (i.e., it has succeeded), 
-   * and the reject function is used to indicate that the promise has been rejected (i.e., it has failed).
-   * https://stackoverflow.com/questions/2707191/unable-to-cope-with-the-asynchronous-nature-of-navigator-geolocation
-   */
+    const geoLocationPromise = new Promise<{ lat: number; lon: number }>((resolve, reject) => {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 1000,
+      };
 
-  const geoLocationPromise = new Promise<{ lat: number; lon: number }>((resolve, reject) => {
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 20000,
-      maximumAge: 1000,
-    }
-    
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        resolve({ lat, lon });
-      },
-      (error) => {
-        reject(error);
-      },
-      options
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          resolve({ lat, lon });
+        },
+        (error) => {
+          reject(error);
+        },
+        options
+      );
+    });
+
+    const geoLocation = await geoLocationPromise;
+    /**
+     * Fetch nominatim API
+     * https://nominatim.org/release-docs/develop/api/Reverse/
+     * https://nominatim.org/release-docs/develop/api/Output/
+     */
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${geoLocation.lat}&lon=${geoLocation.lon}&format=json`
     );
-  });
-
-  const geoLocation = await geoLocationPromise;
-  /**
-   * Fetch nominatim API
-   * https://nominatim.org/release-docs/develop/api/Reverse/
-   * https://nominatim.org/release-docs/develop/api/Output/
-   */
-  const res = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?lat=${geoLocation.lat}&lon=${geoLocation.lon}&format=json`
-  );
-  const data = await res.json();
-  city = data.address.town || data.address.city || data.address.village || data.address.county;
-
+    const data = await res.json();
+    city = data.address.town || data.address.city || data.address.village || data.address.county;
+  }
   return city;
 }
 
