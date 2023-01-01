@@ -37,7 +37,7 @@ function Post({ post }: DocumentData) {
 
         <Box py="1">{post.description}</Box>
         <Flex flexDirection="row">
-          {post.likes}
+          {post.likes.length}
             <LikeUser size="5" mt="0.5" color="red.700" ml="2"  post={post}    />
         </Flex>
       </Box>

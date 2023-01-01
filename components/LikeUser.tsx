@@ -7,31 +7,28 @@ import { AuthContext } from '../utils/AuthStateListener';
 
 function LikeUser({ post }: DocumentData) {
   const toast = useToast();
-  const { id, likesIdUser, likes } = post;
+  const { id,  likes } = post;
 
   const toastId = 'signin-error';
   const { currentUser } = useContext(AuthContext);
   const docRef = doc(db, 'publicPosts', id);
   let color = 'gray.400';
-  if (currentUser && likesIdUser) {
-    if (likesIdUser.includes(currentUser?.uid)) {
+  if (currentUser && likes) {
+    if (likes.includes(currentUser?.uid)) {
       color = 'red.500';
     }
   }
   function toggleLike() {
-    if (likesIdUser.includes(currentUser?.uid)) {
+    if (likes.includes(currentUser?.uid)) {
       updateDoc(docRef, {
-        likesIdUser: arrayRemove(currentUser?.uid),
+        likes: arrayRemove(currentUser?.uid),
       });
     } else {
       updateDoc(docRef, {
-        likesIdUser: arrayUnion(currentUser?.uid),
+        likes: arrayUnion(currentUser?.uid),
       });
     }
   }
-  updateDoc(docRef, {
-    likes: likesIdUser?.length || likes,
-  });
   return (
     <TouchableOpacity
       onPress={
