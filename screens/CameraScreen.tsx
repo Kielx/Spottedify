@@ -9,11 +9,10 @@ export default function App() {
   const cameraRef = useRef<Camera>(null);
   const { setAddPhotoURI, setAddPhotoModalVisible } = useContext(AppContext);
   const navigation = useNavigation();
-
+  //@todo Add permission request
   if (!permission) {
     requestPermission();
   }
-
   if (!permission?.granted) {
     console.log('Permission not granted');
   }
@@ -26,7 +25,8 @@ export default function App() {
       navigation.goBack();
     }
   };
-
+  //@todo Wrap this in try catch or something to prevent crashes on web view
+  //@todo Fix styling of button and view
   return (
     <View style={{ flex: 1 }}>
       <Camera style={{ flex: 1 }} ref={cameraRef}>

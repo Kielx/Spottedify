@@ -89,6 +89,10 @@ function AddNewPostButton() {
               }}>
               Dodaj zdjęcie
             </Button>
+
+            {/**
+             * @todo Add image preview with better styling
+             */}
             <Image source={{ uri: addPhotoURI }} alt="image" size="xl" />
           </Modal.Body>
           <Modal.Footer>
