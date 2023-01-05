@@ -1,14 +1,35 @@
 import React, { useContext } from 'react';
-import { Pressable, Center, Modal, Button, Stack, Input, TextArea, Icon, Text } from 'native-base';
+import {
+  Pressable,
+  Center,
+  Modal,
+  Button,
+  Stack,
+  Input,
+  TextArea,
+  Icon,
+  Text,
+  Image,
+} from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../stacks/RootStack';
 import { db } from '../firebaseConfig';
 import { AuthContext } from '../utils/AuthStateListener';
+import { AppContext } from '../context/AppContext';
+
+type AddNewPostButtonProps = StackNavigationProp<RootStackParamList>;
 
 function AddNewPostButton() {
+  const {
+    addPhotoURI,
+    addPhotoModalVisible: modalVisible,
+    setAddPhotoModalVisible: setModalVisible,
+  } = useContext(AppContext);
   const { currentUser, userProfile } = useContext(AuthContext);
-
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const navigation: AddNewPostButtonProps = useNavigation();
   const [newPost, setNewPost] = React.useState({
     title: '',
     description: '',
@@ -61,9 +82,14 @@ function AddNewPostButton() {
                 onChangeText={(value) => handleChange('description', value)}
               />
             </Stack>
-            <Button>
+            <Button
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate('CameraScreen');
+              }}>
               Dodaj zdjęcie
             </Button>
+            <Image source={{ uri: addPhotoURI }} alt="image" size="xl" />
           </Modal.Body>
           <Modal.Footer>
             <Button.Group space={2}>

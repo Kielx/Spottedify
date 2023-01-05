@@ -11,6 +11,7 @@ import { AuthContext } from '../utils/AuthStateListener';
 import ResetPassword from '../screens/ResetPassword';
 import HeaderNavigateBackButton from '../components/HeaderNavigateBackButton';
 import UserDetailsScreen from '../screens/UserDetailsScreen';
+import CameraScreen from '../screens/CameraScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -27,6 +28,7 @@ export type RootStackParamList = {
       likes: number;
     };
   };
+  CameraScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -97,6 +99,13 @@ function RootStack() {
           <Stack.Screen
             name="UserDetails"
             component={UserDetailsScreen}
+            options={{
+              headerLeft: NavigateBackButtonComponent,
+            }}
+          />
+          <Stack.Screen
+            name="CameraScreen"
+            component={CameraScreen}
             options={{
               headerLeft: NavigateBackButtonComponent,
             }}

@@ -1,27 +1,44 @@
-/* import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Camera } from 'expo-camera';
+import React, { useRef, useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { View, Button } from 'react-native';
+import { AppContext } from '../context/AppContext';
 
 export default function App() {
-  const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const cameraRef = useRef<Camera>(null);
+  const { setAddPhotoURI, setAddPhotoModalVisible } = useContext(AppContext);
+  const navigation = useNavigation();
 
-
-  function toggleCameraType() {
-    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+  if (!permission) {
+    requestPermission();
   }
 
+  if (!permission?.granted) {
+    console.log('Permission not granted');
+  }
+
+  const snap = async () => {
+    if (cameraRef) {
+      const photo = await cameraRef.current?.takePictureAsync();
+      setAddPhotoURI(photo?.uri);
+      setAddPhotoModalVisible(true);
+      navigation.goBack();
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
+    <View style={{ flex: 1 }}>
+      <Camera style={{ flex: 1 }} ref={cameraRef}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'transparent',
+            flexDirection: 'row',
+          }}>
+          <Button onPress={snap} title="Take Photo" />
         </View>
       </Camera>
     </View>
   );
 }
-
-const styles = StyleSheet.create({  });  */
