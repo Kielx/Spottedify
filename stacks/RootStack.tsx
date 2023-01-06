@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Timestamp } from 'firebase/firestore';
+import { DocumentData } from 'firebase/firestore';
 import ToggleDarkMode from '../components/DarkModeToggle';
 import Header from '../components/Header';
 import HomeScreen from '../screens/HomeScreen';
@@ -20,13 +20,7 @@ export type RootStackParamList = {
   ResetPassword: undefined;
   UserDetails: undefined;
   Details: {
-    post: {
-      title: string;
-      description: string;
-      date: Timestamp;
-      location: string;
-      likes: number;
-    };
+    post: DocumentData;
   };
   CameraScreen: undefined;
 };

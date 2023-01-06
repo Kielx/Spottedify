@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { Avatar, VStack, Heading, Text, Center } from 'native-base';
+import { Avatar, VStack, Heading, Text } from 'native-base';
 import { AuthContext } from '../utils/AuthStateListener';
-import UserPostsList from '../components/UserPostLists';
 
 function UserDetailsScreen() {
   const { userProfile, currentUser } = useContext(AuthContext);
@@ -45,9 +44,6 @@ function UserDetailsScreen() {
       <Text color="muted.400" fontSize="lg">
         Twoje posty
       </Text>
-      <Center pt={10} flex={1} _dark={{bg: 'coolGray.700'}}>
-        <UserPostsList />
-      </Center>
     </VStack>
   );
 }

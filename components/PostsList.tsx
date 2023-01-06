@@ -24,7 +24,9 @@ export default function PostsList() {
     getPosts();
   }, []);
 
-  const mapPosts = posts.map((post) => <Post post={post} key={post.id} />);
+  const mapPosts = posts.map((post) => (
+    <Post post={post} key={post.id} posts={posts} setPosts={setPosts} />
+  ));
 
   return (
     <ScrollView px={1} maxW="768px" w={horizontalScale(300)} h={verticalScale(350)}>

@@ -14,12 +14,20 @@ import {
 import { DocumentData } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+
 import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
+import RemovePostButton from './RemovePostButton';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
-function Post({ post }: DocumentData) {
+type Props = {
+  post: DocumentData;
+  posts: DocumentData[];
+  setPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+};
+
+function Post({ post, posts, setPosts }: Props) {
   const { currentUser } = useContext(AuthContext);
   const toast = useToast();
   const toastId = 'signin-error';
@@ -91,6 +99,9 @@ function Post({ post }: DocumentData) {
           Szczegóły
         </Button>
       </VStack>
+      {post.authorId === currentUser?.uid && (
+        <RemovePostButton postr={post} posts={posts} setPosts={setPosts} />
+      )}
     </Box>
   );
 }
