@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Platform } from 'react-native';
 import {
   Pressable,
   Center,
@@ -19,12 +20,14 @@ import { RootStackParamList } from '../stacks/RootStack';
 import { db } from '../firebaseConfig';
 import { AuthContext } from '../utils/AuthStateListener';
 import { AppContext } from '../context/AppContext';
+import AddPhotoButton from './AddPhotoButton';
 
 type AddNewPostButtonProps = StackNavigationProp<RootStackParamList>;
 
 function AddNewPostButton() {
   const {
     addPhotoURI,
+    setAddPhotoURI,
     addPhotoModalVisible: modalVisible,
     setAddPhotoModalVisible: setModalVisible,
   } = useContext(AppContext);
@@ -58,6 +61,16 @@ function AddNewPostButton() {
     setModalVisible(false);
   };
 
+  const checkIfWebOrMobile: () => boolean | undefined = () => {
+    if (Platform.OS === 'ios' || Platform.OS === 'android') {
+      return false;
+    }
+    if (Platform.OS === 'web') {
+      return true;
+    }
+    return undefined;
+  };
+
   return (
     <>
       <Modal isOpen={modalVisible} onClose={setModalVisible}>
@@ -81,23 +94,32 @@ function AddNewPostButton() {
                 placeholder="Opis ogłoszenia"
                 onChangeText={(value) => handleChange('description', value)}
               />
+              {!checkIfWebOrMobile() && (
+                <Button
+                  leftIcon={
+                    <Icon as={<MaterialCommunityIcons name="camera" />} size="sm" color="white" />
+                  }
+                  onPress={() => {
+                    setModalVisible(false);
+                    navigation.navigate('CameraScreen');
+                  }}>
+                  Dodaj zdjęcie z aparatu
+                </Button>
+              )}
+              <AddPhotoButton setAddPhotoURI={setAddPhotoURI} />
+              {addPhotoURI && (
+                <Center>
+                  <Image size="2xl" source={{ uri: addPhotoURI }} alt="User chosen image" />
+                </Center>
+              )}
             </Stack>
-            <Button
-              onPress={() => {
-                setModalVisible(false);
-                navigation.navigate('CameraScreen');
-              }}>
-              Dodaj zdjęcie
-            </Button>
-
-            {/**
-             * @todo Add image preview with better styling
-             */}
-            <Image source={{ uri: addPhotoURI }} alt="image" size="xl" />
           </Modal.Body>
           <Modal.Footer>
             <Button.Group space={2}>
               <Button
+                leftIcon={
+                  <Icon as={<MaterialCommunityIcons name="close" />} size="sm" color="black" />
+                }
                 variant="ghost"
                 colorScheme="blueGray"
                 onPress={() => {
@@ -106,6 +128,13 @@ function AddNewPostButton() {
                 Anuluj
               </Button>
               <Button
+                leftIcon={
+                  <Icon
+                    as={<MaterialCommunityIcons name="content-save" />}
+                    size="sm"
+                    color="white"
+                  />
+                }
                 onPress={() => {
                   addNewPost();
                 }}>
