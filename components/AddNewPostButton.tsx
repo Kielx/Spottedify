@@ -52,6 +52,7 @@ function AddNewPostButton() {
       likes: 0,
       authorId: currentUser?.uid,
       authorName: userProfile?.name,
+      photo: addPhotoURI,
     });
     setNewPost({
       title: '',

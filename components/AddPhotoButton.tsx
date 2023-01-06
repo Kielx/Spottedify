@@ -12,13 +12,15 @@ function AddPhotoButton({ setAddPhotoURI }: Props) {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
+      base64: true,
+      allowsEditing: false,
+      aspect: [16, 9],
       quality: 1,
     });
 
     if (!result.cancelled) {
-      setAddPhotoURI(result.uri);
+      const imageUri = result ? `data:image/jpg;base64,${result.base64}` : '';
+      setAddPhotoURI(imageUri);
     }
   };
 
