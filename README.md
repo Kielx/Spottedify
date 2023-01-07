@@ -7,7 +7,11 @@
 - [x] Add toast or redirect when unauthenticated user wants to display post details
 - [x] Add forgot password functionality and screen
 - [ ] Move signin up when keyboard is shown
-- [ ] Add option to delete posts for authenticated users
-- [ ] Add option to update posts for authenticated users
+- [x] Add option to delete posts for authenticated users
+- [x] Add option to update posts for authenticated users
 - [ ] Update look and feel of details page
 - [ ] Add option to add likes to posts
+- [x] Camera - New Post
+- [ ] Camera - Edit Post
+- [ ] Location - Edit post
+- [ ] User Posts list
