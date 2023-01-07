@@ -1,14 +1,40 @@
 import React, { useContext } from 'react';
-import { Pressable, Center, Modal, Button, Stack, Input, TextArea, Icon, Text } from 'native-base';
+import { Platform } from 'react-native';
+import {
+  Pressable,
+  Center,
+  Modal,
+  Button,
+  Stack,
+  Input,
+  TextArea,
+  Icon,
+  Text,
+  Image,
+  HStack,
+} from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../stacks/RootStack';
 import { db } from '../firebaseConfig';
 import { AuthContext } from '../utils/AuthStateListener';
+import { AppContext } from '../context/AppContext';
+import AddPhotoButton from './AddPhotoButton';
+import GetLocationButton from './GetLocationButton';
+
+type AddNewPostButtonProps = StackNavigationProp<RootStackParamList>;
 
 function AddNewPostButton() {
+  const {
+    addPhotoURI,
+    setAddPhotoURI,
+    addPhotoModalVisible: modalVisible,
+    setAddPhotoModalVisible: setModalVisible,
+  } = useContext(AppContext);
   const { currentUser, userProfile } = useContext(AuthContext);
-
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const navigation: AddNewPostButtonProps = useNavigation();
   const [newPost, setNewPost] = React.useState({
     title: '',
     description: '',
@@ -28,6 +54,7 @@ function AddNewPostButton() {
       likes: [],
       authorId: currentUser?.uid,
       authorName: userProfile?.name,
+      photo: addPhotoURI,
     });
     setNewPost({
       title: '',
@@ -35,6 +62,16 @@ function AddNewPostButton() {
       location: '',
     });
     setModalVisible(false);
+  };
+
+  const checkIfWebOrMobile: () => boolean | undefined = () => {
+    if (Platform.OS === 'ios' || Platform.OS === 'android') {
+      return false;
+    }
+    if (Platform.OS === 'web') {
+      return true;
+    }
+    return undefined;
   };
 
   return (
@@ -50,33 +87,67 @@ function AddNewPostButton() {
                 placeholder="Tytuł nowego ogłoszenia"
                 onChangeText={(value) => handleChange('title', value)}
               />
-              <Input
-                variant="outline"
-                placeholder="Lokalizacja"
-                onChangeText={(value) => handleChange('location', value)}
-              />
+              <HStack>
+                <Input
+                  flex={1}
+                  variant="outline"
+                  placeholder="Lokalizacja"
+                  onChangeText={(value) => handleChange('location', value)}
+                  value={newPost.location}
+                />
+                <GetLocationButton handleChange={handleChange} />
+              </HStack>
+
               <TextArea
                 variant="outline"
                 placeholder="Opis ogłoszenia"
                 onChangeText={(value) => handleChange('description', value)}
               />
+              {!checkIfWebOrMobile() ? (
+                <Button
+                  leftIcon={
+                    <Icon as={<MaterialCommunityIcons name="camera" />} size="sm" color="white" />
+                  }
+                  onPress={() => {
+                    setModalVisible(false);
+                    navigation.navigate('CameraScreen');
+                  }}>
+                  Dodaj zdjęcie z aparatu
+                </Button>
+              ) : null}
+              <AddPhotoButton setAddPhotoURI={setAddPhotoURI} />
+              {addPhotoURI ? (
+                <Center>
+                  <Image size="2xl" source={{ uri: addPhotoURI }} alt="User chosen image" />
+                </Center>
+              ) : null}
             </Stack>
           </Modal.Body>
           <Modal.Footer>
             <Button.Group space={2}>
               <Button
+                leftIcon={
+                  <Icon as={<MaterialCommunityIcons name="close" />} size="sm" color="black" />
+                }
                 variant="ghost"
                 colorScheme="blueGray"
                 onPress={() => {
                   setModalVisible(false);
                 }}>
-                Cancel
+                Anuluj
               </Button>
               <Button
+                leftIcon={
+                  <Icon
+                    as={<MaterialCommunityIcons name="content-save" />}
+                    size="sm"
+                    color="white"
+                  />
+                }
                 onPress={() => {
                   addNewPost();
                 }}>
-                Save
+                Zapisz
               </Button>
             </Button.Group>
           </Modal.Footer>
