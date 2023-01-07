@@ -2,6 +2,7 @@ import React from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, Icon } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as ImageManipulator from 'expo-image-manipulator';
 
 type Props = {
   setAddPhotoURI: React.Dispatch<React.SetStateAction<string>>;
@@ -19,7 +20,13 @@ function AddPhotoButton({ setAddPhotoURI }: Props) {
     });
 
     if (!result.cancelled) {
-      const imageUri = result ? `data:image/jpg;base64,${result.base64}` : '';
+      const manipResult = await ImageManipulator.manipulateAsync(
+        result.uri,
+        [{ resize: { width: 608 } }],
+        { base64: true }
+      );
+
+      const imageUri = manipResult ? `data:image/jpg;base64,${manipResult.base64}` : '';
       setAddPhotoURI(imageUri);
     }
   };

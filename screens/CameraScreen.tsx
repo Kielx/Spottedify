@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
 import { IconButton, Icon, useToast, Box, WarningIcon, Text } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { AppContext } from '../context/AppContext';
 
 export default function App() {
@@ -16,8 +17,17 @@ export default function App() {
   const snap = async () => {
     if (permission) {
       if (permission.granted) {
-        const photo = await cameraRef.current?.takePictureAsync();
-        setAddPhotoURI(photo?.uri);
+        let photo = await cameraRef.current?.takePictureAsync({
+          base64: true,
+        });
+        photo = await ImageManipulator.manipulateAsync(
+          photo?.uri || '',
+          [{ resize: { width: 608 } }],
+          { base64: true }
+        );
+
+        const imageUri = photo ? `data:image/jpg;base64,${photo.base64}` : '';
+        setAddPhotoURI(imageUri);
         setAddPhotoModalVisible(true);
         navigation.goBack();
       } else if (permission.canAskAgain) {
