@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Stack, IconButton, Icon } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DocumentData, doc, deleteDoc } from 'firebase/firestore';
@@ -6,20 +6,15 @@ import { db } from '../firebaseConfig';
 
 type Props = {
   postr: DocumentData;
-  posts: DocumentData[];
-  setPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 };
 
-function RemovePostButton({ postr, posts, setPosts }: Props) {
-  const [modalVisible, setModalVisible] = React.useState(false);
+function RemovePostButton({ postr }: Props) {
+  const [modalVisible, setModalVisible] = useState(false);
 
   const RemovePost = async () => {
     const docRef = doc(db, 'publicPosts', postr.id);
-    await deleteDoc(docRef);
-    const newPosts = posts.filter((post) => post.id !== postr.id);
-    setPosts(newPosts);
-
     setModalVisible(false);
+    await deleteDoc(docRef);
   };
 
   return (
