@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Stack, IconButton, Icon } from 'native-base';
+import { Modal, Button, Stack, IconButton, Icon, Text } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DocumentData, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -25,7 +25,7 @@ function RemovePostButton({ postr }: Props) {
           <Modal.Header>Usuń ogłoszenie</Modal.Header>
           <Modal.Body>
             <Stack space={1} w="75%" maxW="300px" mx="auto">
-              Czy napewno chcesz usunąć post?
+              <Text>Czy napewno chcesz usunąć post?</Text>
             </Stack>
           </Modal.Body>
           <Modal.Footer>
