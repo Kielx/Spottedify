@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Timestamp } from 'firebase/firestore';
+import { DocumentData } from 'firebase/firestore';
 import ToggleDarkMode from '../components/DarkModeToggle';
 import Header from '../components/Header';
 import HomeScreen from '../screens/HomeScreen';
@@ -11,6 +11,7 @@ import { AuthContext } from '../utils/AuthStateListener';
 import ResetPassword from '../screens/ResetPassword';
 import HeaderNavigateBackButton from '../components/HeaderNavigateBackButton';
 import UserDetailsScreen from '../screens/UserDetailsScreen';
+import CameraScreen from '../screens/CameraScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -19,14 +20,9 @@ export type RootStackParamList = {
   ResetPassword: undefined;
   UserDetails: undefined;
   Details: {
-    post: {
-      title: string;
-      description: string;
-      date: Timestamp;
-      location: string;
-      likes: number;
-    };
+    post: DocumentData;
   };
+  CameraScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -97,6 +93,13 @@ function RootStack() {
           <Stack.Screen
             name="UserDetails"
             component={UserDetailsScreen}
+            options={{
+              headerLeft: NavigateBackButtonComponent,
+            }}
+          />
+          <Stack.Screen
+            name="CameraScreen"
+            component={CameraScreen}
             options={{
               headerLeft: NavigateBackButtonComponent,
             }}

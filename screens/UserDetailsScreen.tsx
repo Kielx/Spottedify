@@ -41,6 +41,9 @@ function UserDetailsScreen() {
           day: 'numeric',
         })}
       </Text>
+      <Text color="muted.400" fontSize="lg">
+        Twoje posty
+      </Text>
     </VStack>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { NativeBaseProvider, extendTheme } from 'native-base';
+import '@expo/match-media';
 import AuthStateListener from './utils/AuthStateListener';
 import RootStack from './stacks/RootStack';
 import BottomPanel from './components/BottomPanel';
