@@ -95,7 +95,7 @@ function AddNewPostButton() {
                 placeholder="Opis ogłoszenia"
                 onChangeText={(value) => handleChange('description', value)}
               />
-              {!checkIfWebOrMobile() && (
+              {!checkIfWebOrMobile() ? (
                 <Button
                   leftIcon={
                     <Icon as={<MaterialCommunityIcons name="camera" />} size="sm" color="white" />
@@ -106,13 +106,13 @@ function AddNewPostButton() {
                   }}>
                   Dodaj zdjęcie z aparatu
                 </Button>
-              )}
+              ) : null}
               <AddPhotoButton setAddPhotoURI={setAddPhotoURI} />
-              {addPhotoURI && (
+              {addPhotoURI ? (
                 <Center>
                   <Image size="2xl" source={{ uri: addPhotoURI }} alt="User chosen image" />
                 </Center>
-              )}
+              ) : null}
             </Stack>
           </Modal.Body>
           <Modal.Footer>

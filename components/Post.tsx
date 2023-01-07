@@ -18,16 +18,15 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
 import RemovePostButton from './RemovePostButton';
+import EditPostButton from './EditPostButton';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 type Props = {
   post: DocumentData;
-  posts: DocumentData[];
-  setPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 };
 
-function Post({ post, posts, setPosts }: Props) {
+function Post({ post }: Props) {
   const { currentUser } = useContext(AuthContext);
   const toast = useToast();
   const toastId = 'signin-error';
@@ -45,7 +44,7 @@ function Post({ post, posts, setPosts }: Props) {
       p="0"
       rounded="md"
       shadow="3">
-      {post.photo && (
+      {post.photo ? (
         <Image
           h={isBigScreen ? '100%' : 40}
           width={isBigScreen ? '40%' : '100%'}
@@ -53,7 +52,7 @@ function Post({ post, posts, setPosts }: Props) {
           alt="post photo"
           roundedTop="md"
         />
-      )}
+      ) : null}
       <VStack flex="1">
         <Box p="4">
           <Text pt="1" fontWeight="bold" fontSize="xl">
@@ -99,9 +98,12 @@ function Post({ post, posts, setPosts }: Props) {
           Szczegóły
         </Button>
       </VStack>
-      {post.authorId === currentUser?.uid && (
-        <RemovePostButton postr={post} posts={posts} setPosts={setPosts} />
-      )}
+      {post.authorId === currentUser?.uid ? (
+        <>
+          <RemovePostButton postr={post} />
+          <EditPostButton poste={post} />
+        </>
+      ) : null}
     </Box>
   );
 }
