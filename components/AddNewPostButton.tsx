@@ -11,6 +11,7 @@ import {
   Icon,
   Text,
   Image,
+  HStack,
 } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { addDoc, Timestamp, collection } from 'firebase/firestore';
@@ -21,6 +22,7 @@ import { db } from '../firebaseConfig';
 import { AuthContext } from '../utils/AuthStateListener';
 import { AppContext } from '../context/AppContext';
 import AddPhotoButton from './AddPhotoButton';
+import GetLocationButton from './GetLocationButton';
 
 type AddNewPostButtonProps = StackNavigationProp<RootStackParamList>;
 
@@ -85,11 +87,17 @@ function AddNewPostButton() {
                 placeholder="Tytuł nowego ogłoszenia"
                 onChangeText={(value) => handleChange('title', value)}
               />
-              <Input
-                variant="outline"
-                placeholder="Lokalizacja"
-                onChangeText={(value) => handleChange('location', value)}
-              />
+              <HStack>
+                <Input
+                  flex={1}
+                  variant="outline"
+                  placeholder="Lokalizacja"
+                  onChangeText={(value) => handleChange('location', value)}
+                  value={newPost.location}
+                />
+                <GetLocationButton handleChange={handleChange} />
+              </HStack>
+
               <TextArea
                 variant="outline"
                 placeholder="Opis ogłoszenia"
