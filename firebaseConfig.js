@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 // Optionally import the services that you want to use
-import { getAuth } from 'firebase/auth';
+import { initializeAuth } from 'firebase/auth/react-native';
 // import {...} from "firebase/database";
 // import {...} from "firebase/firestore";
 // import {...} from "firebase/functions";
@@ -26,6 +26,6 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
-const auth = getAuth(app);
+const auth = initializeAuth(app);
 
 export { db, app, auth };
