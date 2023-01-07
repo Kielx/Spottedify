@@ -10,18 +10,20 @@ import {
   IconButton,
   Center,
   Image,
+  HStack,
 } from 'native-base';
 import { Timestamp, DocumentData, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import AddPhotoButton from './AddPhotoButton';
+import GetLocationButton from './GetLocationButton';
 
 function EditPostButton({ poste }: DocumentData) {
   const [modalVisible, setModalVisible] = useState(false);
   const [photoUri, setPhotoUri] = useState(poste.photo || '');
   const [editPost, setEditPost] = useState({
-    title: '',
-    description: '',
-    location: '',
+    title: poste.title,
+    description: poste.description,
+    location: poste.location,
   });
 
   const handleChange = (name: string, value: string) => {
@@ -32,9 +34,9 @@ function EditPostButton({ poste }: DocumentData) {
     const docRef = doc(db, 'publicPosts', poste.id);
 
     const data = {
-      title: editPost.title !== '' ? editPost.title : poste.title,
-      description: editPost.description !== '' ? editPost.description : poste.description,
-      location: editPost.location !== '' ? editPost.location : poste.location,
+      title: editPost.title,
+      description: editPost.description,
+      location: editPost.location,
       date: Timestamp.fromDate(new Date()),
       photo: photoUri,
     };
@@ -55,11 +57,17 @@ function EditPostButton({ poste }: DocumentData) {
                 defaultValue={poste.title}
                 onChangeText={(value) => handleChange('title', value)}
               />
-              <Input
-                variant="outline"
-                defaultValue={poste.location}
-                onChangeText={(value) => handleChange('location', value)}
-              />
+              <HStack>
+                <Input
+                  flex={1}
+                  variant="outline"
+                  placeholder="Lokalizacja"
+                  onChangeText={(value) => handleChange('location', value)}
+                  defaultValue={poste.location}
+                  value={editPost.location}
+                />
+                <GetLocationButton handleChange={handleChange} />
+              </HStack>
               <TextArea
                 variant="outline"
                 defaultValue={poste.description}

@@ -10,7 +10,7 @@
 - [x] Add option to update posts for authenticated users
 - [x] Camera - New Post
 - [ ] Camera - Edit Post
-- [ ] Location - Edit post
+- [x] Location - Edit post
 - [ ] User Posts list
 - [ ] User likes list
 - [ ] Update look and feel of details page
