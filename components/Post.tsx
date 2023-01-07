@@ -1,22 +1,12 @@
 import React, { useContext } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import {
-  Box,
-  Text,
-  FavouriteIcon,
-  Flex,
-  Button,
-  useToast,
-  WarningIcon,
-  Image,
-  VStack,
-} from 'native-base';
+import { Box, Text, Flex, Button, useToast, WarningIcon, Image, VStack } from 'native-base';
 import { DocumentData } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-
 import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
+import LikeUser from './LikeUser';
 import RemovePostButton from './RemovePostButton';
 import EditPostButton from './EditPostButton';
 
@@ -64,15 +54,15 @@ function Post({ post }: Props) {
           <Text fontSize="sm" color="gray.500" _dark={{ color: 'gray.400' }}>
             {post.date.toDate().toLocaleDateString('pl-PL')} - {post.location}
           </Text>
-
           <Text numberOfLines={3} py="1">
             {post.description}
           </Text>
           <Flex flexDirection="row">
-            {post.likes}
-            <FavouriteIcon size="5" mt="0.5" color="red.700" ml="2" />
+            {post.likes.length}
+            <LikeUser size="5" mt="0.5" color="red.700" ml="2" post={post} />
           </Flex>
         </Box>
+
         <Button
           roundedTop={0}
           onPress={
