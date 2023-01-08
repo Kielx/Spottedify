@@ -40,7 +40,11 @@ function Post({ post }: Props) {
           width={isBigScreen ? '40%' : '100%'}
           source={{ uri: post.photo }}
           alt="post photo"
-          roundedTop="md"
+          _ios={{ roundedTop: 'md' }}
+          _android={{ roundedTop: 'md' }}
+          _web={{
+            roundedLeft: 'md',
+          }}
         />
       ) : null}
       <VStack flex="1">
@@ -65,6 +69,9 @@ function Post({ post }: Props) {
 
         <Button
           roundedTop={0}
+          _web={{
+            roundedLeft: 0,
+          }}
           onPress={
             currentUser
               ? () => navigation.navigate('Details', { post })
