@@ -12,10 +12,10 @@
 - [x] Rounded corners in post (different for mobile and web)
 - [x] Location - Edit post
 - [x] Add option to add likes to posts
+- [x] Update look and feel of details page
+- [x] Photo in details page
 - [ ] Camera - Edit Post
 - [ ] User Posts list
 - [ ] User likes list
-- [ ] Update look and feel of details page
-- [ ] Photo in details page
 - [ ] Move signin up when keyboard is shown
 
