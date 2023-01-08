@@ -1,4 +1,4 @@
-import { Text, Heading, VStack } from 'native-base';
+import { Text, Heading, VStack, Image, ScrollView } from 'native-base';
 import React, { useEffect } from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +9,6 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 function PostDetailsScreen({ route }: Props) {
   const navigation = useNavigation();
   const { post } = route.params;
-  console.log(post);
   useEffect(() => {
     navigation.setOptions({ headerTitle: post.title });
   }, []);
@@ -17,12 +16,23 @@ function PostDetailsScreen({ route }: Props) {
   return (
     <VStack
       space={5}
-      p={4}
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        margin: 'auto',
+      }}
+      width="100%"
+      maxWidth={768}
       _light={{ color: 'white' }}
       _dark={{ bg: 'light.700', color: 'white' }}>
+      <Image alt="Post photo" source={{ uri: post.photo }} h="48" width="100%" resizeMode="cover" />
       <Heading>{post.title}</Heading>
-      <Text>{post.description}</Text>
+      <ScrollView>
+        <Text px={5} py={2}>
+          {post.description}
+        </Text>
+      </ScrollView>
     </VStack>
   );
 }
