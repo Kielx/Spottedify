@@ -17,3 +17,4 @@
 - [ ] Photo in details page
 - [ ] Add option to add likes to posts
 - [ ] Move signin up when keyboard is shown
+- [ ] Rounded corners in post (different for mobile and web)
