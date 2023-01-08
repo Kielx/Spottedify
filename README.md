@@ -9,12 +9,13 @@
 - [x] Add option to delete posts for authenticated users
 - [x] Add option to update posts for authenticated users
 - [x] Camera - New Post
-- [ ] Camera - Edit Post
+- [x] Rounded corners in post (different for mobile and web)
 - [x] Location - Edit post
+- [x] Add option to add likes to posts
+- [ ] Camera - Edit Post
 - [ ] User Posts list
 - [ ] User likes list
 - [ ] Update look and feel of details page
 - [ ] Photo in details page
-- [ ] Add option to add likes to posts
 - [ ] Move signin up when keyboard is shown
-- [ ] Rounded corners in post (different for mobile and web)
+
