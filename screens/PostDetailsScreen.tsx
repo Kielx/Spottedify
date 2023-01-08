@@ -9,7 +9,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 function PostDetailsScreen({ route }: Props) {
   const navigation = useNavigation();
   const { post } = route.params;
-
+  console.log(post);
   useEffect(() => {
     navigation.setOptions({ headerTitle: post.title });
   }, []);

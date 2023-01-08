@@ -54,7 +54,7 @@ function EditPostButton({ poste }: DocumentData) {
             <Stack space={1} w="75%" maxW="300px" mx="auto">
               <Input
                 variant="outline"
-                defaultValue={poste.title}
+                value={editPost.title}
                 onChangeText={(value) => handleChange('title', value)}
               />
               <HStack>
@@ -63,14 +63,13 @@ function EditPostButton({ poste }: DocumentData) {
                   variant="outline"
                   placeholder="Lokalizacja"
                   onChangeText={(value) => handleChange('location', value)}
-                  defaultValue={poste.location}
                   value={editPost.location}
                 />
                 <GetLocationButton handleChange={handleChange} />
               </HStack>
               <TextArea
                 variant="outline"
-                defaultValue={poste.description}
+                value={editPost.description}
                 onChangeText={(value) => handleChange('description', value)}
               />
               <AddPhotoButton setAddPhotoURI={setPhotoUri} />
