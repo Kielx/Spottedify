@@ -11,6 +11,7 @@ import {
   Center,
   Image,
   HStack,
+  Tooltip,
 } from 'native-base';
 import { Timestamp, DocumentData, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -100,15 +101,17 @@ function EditPostButton({ poste }: DocumentData) {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
-      <IconButton
-        onPress={() => {
-          setModalVisible(true);
-        }}
-        position="absolute"
-        top="0"
-        right="7"
-        icon={<Icon as={<MaterialCommunityIcons name="pencil" />} color="white" size="md" />}
-      />
+      <Tooltip label="Edytuj" bg="secondary.500" rounded="md" placement="top">
+        <IconButton
+          onPress={() => {
+            setModalVisible(true);
+          }}
+          position="absolute"
+          top="0"
+          right="10"
+          icon={<Icon as={<MaterialCommunityIcons name="pencil" />} color="white" size="md" />}
+        />
+      </Tooltip>
     </>
   );
 }
