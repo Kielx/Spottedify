@@ -4,6 +4,7 @@ import { collection, DocumentData, onSnapshot, query, orderBy, where } from 'fir
 import { db } from '../firebaseConfig';
 import Post from './Post';
 import { verticalScale, horizontalScale } from '../utils/Metrics';
+import getCurrentCity from '../utils/getCurrentCity';
 
 export default function PostsList() {
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
@@ -38,8 +39,9 @@ export default function PostsList() {
     };
     // @todo - Update query to use current location
     const queryByCurrentLocation = async () => {
+      const city = await getCurrentCity();
       onSnapshot(
-        query(collection(db, 'publicPosts'), where('location', '==', 'Jędrzejów')),
+        query(collection(db, 'publicPosts'), where('location', '==', city)),
         (querySnapshot) => {
           setPosts([]);
           querySnapshot.forEach((doc) => {
@@ -67,13 +69,13 @@ export default function PostsList() {
   return (
     <ScrollView px={1} maxW="768px" w={horizontalScale(300)} h={verticalScale(350)}>
       <Select
-        placeholder="Mode of payment"
+        placeholder="Wybierz metodę sortowania postów"
         selectedValue={sortingCriteria}
         width={150}
         onValueChange={(itemValue: string) => setSortingCriteria(itemValue)}>
-        <Select.Item label="Date added" value="date added" />
-        <Select.Item label="Likes" value="likes" />
-        <Select.Item label="Current Location" value="current location" />
+        <Select.Item label="Data dodania" value="date added" />
+        <Select.Item label="Ilośc polubień" value="likes" />
+        <Select.Item label="Bieżąca lokalizacja" value="current location" />
       </Select>
       {mapPosts}
     </ScrollView>
