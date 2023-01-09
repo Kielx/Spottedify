@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, Text, FavouriteIcon, useToast, WarningIcon } from 'native-base';
+import { Box, Text, FavouriteIcon, useToast, WarningIcon, Tooltip } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { doc, arrayUnion, arrayRemove, updateDoc, DocumentData } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -7,7 +7,7 @@ import { AuthContext } from '../utils/AuthStateListener';
 
 function LikeUser({ post }: DocumentData) {
   const toast = useToast();
-  const { id,  likes } = post;
+  const { id, likes } = post;
 
   const toastId = 'signin-error';
   const { currentUser } = useContext(AuthContext);
@@ -51,7 +51,13 @@ function LikeUser({ post }: DocumentData) {
               }
             }
       }>
-      <FavouriteIcon size="5" mt="0.5" ml="2" color={color} />
+      <Tooltip
+        label={color === 'red.500' ? 'Usuń polubienie' : 'Dodaj polubienie'}
+        bg={color === 'red.500' ? 'primary.500' : 'secondary.500'}
+        rounded="md"
+        placement="top">
+        <FavouriteIcon size="5" mt="0.5" ml="2" color={color} />
+      </Tooltip>
     </TouchableOpacity>
   );
 }

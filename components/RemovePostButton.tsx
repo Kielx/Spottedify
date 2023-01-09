@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Stack, IconButton, Icon, Text } from 'native-base';
+import { Modal, Button, Stack, IconButton, Icon, Text, Tooltip } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DocumentData, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -48,17 +48,19 @@ function RemovePostButton({ postr }: Props) {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
-      <IconButton
-        onPress={() => {
-          setModalVisible(true);
-        }}
-        position="absolute"
-        top="0"
-        right="0"
-        icon={
-          <Icon as={<MaterialCommunityIcons name="delete-outline" />} color="white" size="md" />
-        }
-      />
+      <Tooltip label="Usuń" bg="secondary.500" rounded="md" placement="top">
+        <IconButton
+          onPress={() => {
+            setModalVisible(true);
+          }}
+          position="absolute"
+          top="0"
+          right="0"
+          icon={
+            <Icon as={<MaterialCommunityIcons name="delete-outline" />} color="white" size="md" />
+          }
+        />
+      </Tooltip>
     </>
   );
 }
