@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Select } from 'native-base';
+import { Flex, ScrollView, Select, Text } from 'native-base';
 import { collection, DocumentData, onSnapshot, query, orderBy, where } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Post from './Post';
@@ -68,15 +68,20 @@ export default function PostsList() {
 
   return (
     <ScrollView px={1} maxW="768px" w={horizontalScale(300)} h={verticalScale(350)}>
-      <Select
-        placeholder="Wybierz metodę sortowania postów"
-        selectedValue={sortingCriteria}
-        width={150}
-        onValueChange={(itemValue: string) => setSortingCriteria(itemValue)}>
-        <Select.Item label="Data dodania" value="date added" />
-        <Select.Item label="Ilośc polubień" value="likes" />
-        <Select.Item label="Bieżąca lokalizacja" value="current location" />
-      </Select>
+      <Flex direction="row" alignItems="center" justifyContent="flex-end" mb={2}>
+        <Text fontSize="sm" mr="2" color="gray.400">
+          Sortuj według:
+        </Text>
+        <Select
+          placeholder="Wybierz metodę sortowania postów"
+          selectedValue={sortingCriteria}
+          width={150}
+          onValueChange={(itemValue: string) => setSortingCriteria(itemValue)}>
+          <Select.Item label="Data dodania" value="date added" />
+          <Select.Item label="Ilośc polubień" value="likes" />
+          <Select.Item label="Bieżąca lokalizacja" value="current location" />
+        </Select>
+      </Flex>
       {mapPosts}
     </ScrollView>
   );
