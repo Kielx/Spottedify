@@ -17,24 +17,34 @@ export default function PostsList() {
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
   const [mappedPosts, setMappedPosts] = React.useState<ReactElement[]>([]);
   const [sortingCriteria, setSortingCriteria] = React.useState('date added');
+  const [location, setLocation] = React.useState('');
   let unsubscribe: Unsubscribe;
 
   const getPosts = async () => {
+    console.log('loading');
     unsubscribe = onSnapshot(
       query(collection(db, 'publicPosts'), orderBy('date', 'desc')),
       (querySnapshot) => {
         setPosts([]);
+        const workPosts: DocumentData[] = [];
         querySnapshot.forEach((doc) => {
           const data: DocumentData = doc.data();
           const { id } = doc;
-          setPosts((prev: DocumentData[]) => [...prev, { ...data, id }]);
+          workPosts.push({ ...data, id });
         });
+        setPosts(workPosts);
       }
     );
+    const loc = await getCurrentCity();
+    setLocation(loc);
+    console.log('finished loading');
   };
 
   React.useEffect(() => {
     getPosts();
+    const sortedPosts: DocumentData[] = posts.sort((a, b) => b.date.seconds - a.date.seconds);
+    const mapPosts = sortedPosts.map((post) => <Post post={post} key={post.id} />);
+    setMappedPosts(mapPosts);
 
     return () => {
       unsubscribe();
@@ -43,12 +53,10 @@ export default function PostsList() {
 
   React.useEffect(() => {
     let mapPosts: ReactElement[] = [];
-
     if (sortingCriteria === 'current location') {
       const getLocation = async () => {
         try {
-          const loc = await getCurrentCity();
-          const filteredPosts = posts.filter((post) => post.location === loc);
+          const filteredPosts = posts.filter((post) => post.location === location);
           mapPosts = filteredPosts.map((post) => <Post post={post} key={post.id} />);
           setMappedPosts(mapPosts);
         } catch (error) {
