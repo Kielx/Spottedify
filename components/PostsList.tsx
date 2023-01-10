@@ -1,6 +1,14 @@
 import React from 'react';
 import { Flex, ScrollView, Select, Text } from 'native-base';
-import { collection, DocumentData, onSnapshot, query, orderBy, where } from 'firebase/firestore';
+import {
+  collection,
+  DocumentData,
+  onSnapshot,
+  query,
+  orderBy,
+  where,
+  Unsubscribe,
+} from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Post from './Post';
 import { verticalScale, horizontalScale } from '../utils/Metrics';
@@ -9,6 +17,7 @@ import getCurrentCity from '../utils/getCurrentCity';
 export default function PostsList() {
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
   const [sortingCriteria, setSortingCriteria] = React.useState('date added');
+  const unsubscribeArray: Unsubscribe[] = [];
 
   let unsubscribeQueryByDate: () => void;
   let unsubscribeQueryByLikes: () => void;
@@ -26,6 +35,7 @@ export default function PostsList() {
         });
       }
     );
+    unsubscribeArray.push(unsubscribeQueryByDate);
   };
 
   const queryByLikes = async () => {
@@ -42,6 +52,7 @@ export default function PostsList() {
         });
       }
     );
+    unsubscribeArray.push(unsubscribeQueryByLikes);
   };
   // @todo - Update query to use current location
   const queryByCurrentLocation = async () => {
@@ -57,6 +68,7 @@ export default function PostsList() {
         });
       }
     );
+    unsubscribeArray.push(unsubscribeQueryByCurrentLocation);
   };
 
   React.useEffect(() => {
@@ -71,15 +83,7 @@ export default function PostsList() {
     }
 
     return () => {
-      if (sortingCriteria === 'date added') {
-        unsubscribeQueryByDate();
-      }
-      if (sortingCriteria === 'likes') {
-        unsubscribeQueryByLikes();
-      }
-      if (sortingCriteria === 'current location') {
-        unsubscribeQueryByCurrentLocation();
-      }
+      unsubscribeArray.forEach((unsubscribe) => unsubscribe());
     };
   }, [sortingCriteria]);
 
