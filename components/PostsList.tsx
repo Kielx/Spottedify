@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Flex, ScrollView, Select, Text } from 'native-base';
 import {
   collection,
@@ -6,7 +6,6 @@ import {
   onSnapshot,
   query,
   orderBy,
-  where,
   Unsubscribe,
 } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -16,15 +15,12 @@ import getCurrentCity from '../utils/getCurrentCity';
 
 export default function PostsList() {
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
+  const [mappedPosts, setMappedPosts] = React.useState<ReactElement[]>([]);
   const [sortingCriteria, setSortingCriteria] = React.useState('date added');
-  const unsubscribeArray: Unsubscribe[] = [];
+  let unsubscribe: Unsubscribe;
 
-  let unsubscribeQueryByDate: () => void;
-  let unsubscribeQueryByLikes: () => void;
-  let unsubscribeQueryByCurrentLocation: () => void;
-
-  const queryByDate = async () => {
-    unsubscribeQueryByDate = onSnapshot(
+  const getPosts = async () => {
+    unsubscribe = onSnapshot(
       query(collection(db, 'publicPosts'), orderBy('date', 'desc')),
       (querySnapshot) => {
         setPosts([]);
@@ -35,59 +31,41 @@ export default function PostsList() {
         });
       }
     );
-    unsubscribeArray.push(unsubscribeQueryByDate);
-  };
-
-  const queryByLikes = async () => {
-    unsubscribeQueryByLikes = onSnapshot(
-      query(collection(db, 'publicPosts'), orderBy('likes', 'desc')),
-      (querySnapshot) => {
-        setPosts([]);
-        querySnapshot.forEach((doc) => {
-          const data: DocumentData = doc.data();
-          const { id } = doc;
-          setPosts((prev: DocumentData[]) =>
-            [...prev, { ...data, id }].sort((a, b) => b.likes.length - a.likes.length)
-          );
-        });
-      }
-    );
-    unsubscribeArray.push(unsubscribeQueryByLikes);
-  };
-  // @todo - Update query to use current location
-  const queryByCurrentLocation = async () => {
-    const city = await getCurrentCity();
-    unsubscribeQueryByCurrentLocation = onSnapshot(
-      query(collection(db, 'publicPosts'), where('location', '==', city)),
-      (querySnapshot) => {
-        setPosts([]);
-        querySnapshot.forEach((doc) => {
-          const data: DocumentData = doc.data();
-          const { id } = doc;
-          setPosts((prev: DocumentData[]) => [...prev, { ...data, id }]);
-        });
-      }
-    );
-    unsubscribeArray.push(unsubscribeQueryByCurrentLocation);
   };
 
   React.useEffect(() => {
-    if (sortingCriteria === 'date added') {
-      queryByDate();
-    }
-    if (sortingCriteria === 'likes') {
-      queryByLikes();
-    }
-    if (sortingCriteria === 'current location') {
-      queryByCurrentLocation();
-    }
+    getPosts();
 
     return () => {
-      unsubscribeArray.forEach((unsubscribe) => unsubscribe());
+      unsubscribe();
     };
-  }, [sortingCriteria]);
+  }, []);
 
-  const mapPosts = posts.map((post) => <Post post={post} key={post.id} />);
+  React.useEffect(() => {
+    let mapPosts: ReactElement[] = [];
+
+    if (sortingCriteria === 'current location') {
+      const getLocation = async () => {
+        try {
+          const loc = await getCurrentCity();
+          const filteredPosts = posts.filter((post) => post.location === loc);
+          mapPosts = filteredPosts.map((post) => <Post post={post} key={post.id} />);
+          setMappedPosts(mapPosts);
+        } catch (error) {
+          console.error('Nie udało się ustalić lokalizacji');
+        }
+      };
+      getLocation();
+    } else if (sortingCriteria === 'likes') {
+      const sortedPosts = posts.sort((a, b) => b.likes.length - a.likes.length);
+      mapPosts = sortedPosts.map((post) => <Post post={post} key={post.id} />);
+      setMappedPosts(mapPosts);
+    } else if (sortingCriteria === 'date added') {
+      const sortedPosts: DocumentData[] = posts.sort((a, b) => b.date.seconds - a.date.seconds);
+      mapPosts = sortedPosts.map((post) => <Post post={post} key={post.id} />);
+      setMappedPosts(mapPosts);
+    }
+  }, [sortingCriteria, posts]);
 
   return (
     <ScrollView px={1} maxW="768px" w={horizontalScale(300)} h={verticalScale(350)}>
@@ -105,8 +83,7 @@ export default function PostsList() {
           <Select.Item label="Bieżąca lokalizacja" value="current location" />
         </Select>
       </Flex>
-      {mapPosts}
+      {mappedPosts}
     </ScrollView>
   );
 }
-
