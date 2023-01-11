@@ -5,12 +5,14 @@ import { db } from '../firebaseConfig';
 import { AuthContext } from '../utils/AuthStateListener';
 import { verticalScale, horizontalScale } from '../utils/Metrics';
 import PostShort from './PostShort';
+import UserPostListSkeleton from './UserPostListSkeleton';
 
 export default function UserPostsList() {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
-
+  const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
+    setLoading(true);
     const getPosts = async () => {
       const q = query(collection(db, 'publicPosts'), where('authorId', '==', currentUser.uid));
       onSnapshot(q, (querySnapshot) => {
@@ -22,6 +24,7 @@ export default function UserPostsList() {
           workPosts.push({ ...data, id });
         });
         setPosts(workPosts);
+        setLoading(false);
       });
     };
     if (currentUser.uid) {
@@ -33,7 +36,8 @@ export default function UserPostsList() {
 
   return (
     <ScrollView px={1} maxW="768px" w={horizontalScale(300)} h={verticalScale(350)}>
-      {mapPosts}
+      {}
+      {loading ? [...Array(5)].map((_, i) => <UserPostListSkeleton key={i} />) : mapPosts}
     </ScrollView>
   );
 }
