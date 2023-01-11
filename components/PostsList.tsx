@@ -1,83 +1,58 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { Flex, ScrollView, Select, Text } from 'native-base';
-import {
-  collection,
-  DocumentData,
-  onSnapshot,
-  query,
-  orderBy,
-  Unsubscribe,
-} from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { DocumentData } from 'firebase/firestore';
 import Post from './Post';
 import { verticalScale, horizontalScale } from '../utils/Metrics';
 import getCurrentCity from '../utils/getCurrentCity';
 import LoadingSkeleton from './LoadingSkeleton';
+import { AppContext } from '../context/AppContext';
 
 export default function PostsList() {
-  const [posts, setPosts] = React.useState<DocumentData[]>([]);
+  const { posts, postsLoading, setPostsLoading } = useContext(AppContext);
   const [mappedPosts, setMappedPosts] = React.useState<ReactElement[]>([]);
   const [sortingCriteria, setSortingCriteria] = React.useState('date added');
   const [location, setLocation] = React.useState('');
-  const [loading, setLoading] = React.useState(true);
-  let unsubscribe: Unsubscribe;
-
-  const getPosts = async () => {
-    unsubscribe = onSnapshot(
-      query(collection(db, 'publicPosts'), orderBy('date', 'desc')),
-      (querySnapshot) => {
-        setPosts([]);
-        const workPosts: DocumentData[] = [];
-        querySnapshot.forEach((doc) => {
-          const data: DocumentData = doc.data();
-          const { id } = doc;
-          workPosts.push({ ...data, id });
-        });
-        setPosts(workPosts);
-      }
-    );
-    const loc = await getCurrentCity();
-    setLocation(loc);
-  };
 
   React.useEffect(() => {
-    setLoading(true);
-    getPosts();
-    const sortedPosts: DocumentData[] = posts.sort((a, b) => b.date.seconds - a.date.seconds);
-    const mapPosts = sortedPosts.map((post) => <Post post={post} key={post.id} />);
-    setMappedPosts(mapPosts);
-    setLoading(false);
-    return () => {
-      unsubscribe();
+    const getLocation = async () => {
+      const loc = await getCurrentCity();
+      setLocation(loc);
     };
+    getLocation();
   }, []);
 
   React.useEffect(() => {
-    setLoading(true);
+    setPostsLoading(true);
     let mapPosts: ReactElement[] = [];
     if (sortingCriteria === 'current location') {
       const getLocation = async () => {
         try {
-          const filteredPosts = posts.filter((post) => post.location === location);
-          mapPosts = filteredPosts.map((post) => <Post post={post} key={post.id} />);
+          const filteredPosts = posts.filter(
+            (post: { location: string }) => post.location === location
+          );
+          mapPosts = filteredPosts.map((post: DocumentData) => <Post post={post} key={post.id} />);
           setMappedPosts(mapPosts);
         } catch (error) {
           // Error retrieving data
         }
       };
       getLocation();
-      setLoading(false);
     } else if (sortingCriteria === 'likes') {
-      const sortedPosts = posts.sort((a, b) => b.likes.length - a.likes.length);
-      mapPosts = sortedPosts.map((post) => <Post post={post} key={post.id} />);
+      const sortedPosts = posts.sort(
+        (a: { likes: string | string[] }, b: { likes: string | string[] }) =>
+          b.likes.length - a.likes.length
+      );
+      mapPosts = sortedPosts.map((post: DocumentData) => <Post post={post} key={post.id} />);
       setMappedPosts(mapPosts);
-      setLoading(false);
     } else if (sortingCriteria === 'date added') {
-      const sortedPosts: DocumentData[] = posts.sort((a, b) => b.date.seconds - a.date.seconds);
+      const sortedPosts: DocumentData[] = posts.sort(
+        (a: { date: { seconds: number } }, b: { date: { seconds: number } }) =>
+          b.date.seconds - a.date.seconds
+      );
       mapPosts = sortedPosts.map((post) => <Post post={post} key={post.id} />);
       setMappedPosts(mapPosts);
-      setLoading(false);
     }
+    setPostsLoading(false);
   }, [sortingCriteria, posts]);
 
   return (
@@ -96,7 +71,7 @@ export default function PostsList() {
           <Select.Item label="Bieżąca lokalizacja" value="current location" />
         </Select>
       </Flex>
-      {loading || mappedPosts.length === 0 ? (
+      {postsLoading || mappedPosts.length === 0 ? (
         <>
           <LoadingSkeleton />
           <LoadingSkeleton />
