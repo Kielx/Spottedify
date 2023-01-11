@@ -22,7 +22,7 @@ function LoadingSkeleton() {
           <Skeleton />
           <Skeleton.Text />
           <HStack space="2" alignItems="center">
-            <Skeleton h="3" flex="1" rounded="full" startColor="indigo.300" />
+            <Skeleton h="8" flex="1" rounded="md" startColor="primary.300" />
           </HStack>
         </VStack>
       </HStack>
