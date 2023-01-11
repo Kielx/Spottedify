@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useContext } from 'react';
 import { ScrollView } from 'native-base';
 import { collection, DocumentData, onSnapshot, query, where } from 'firebase/firestore';
