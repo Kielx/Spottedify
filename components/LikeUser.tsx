@@ -12,7 +12,7 @@ function LikeUser({ post }: DocumentData) {
   const toastId = 'signin-error';
   const { currentUser } = useContext(AuthContext);
   const docRef = doc(db, 'publicPosts', id);
-  const userLiked = likes.includes(currentUser.uid);
+  const userLiked = likes.includes(currentUser?.uid);
 
   let color = 'gray.400';
   if (currentUser && likes) {
