@@ -15,11 +15,13 @@ export default function UserPostsList() {
       const q = query(collection(db, 'publicPosts'), where('authorId', '==', currentUser.uid));
       onSnapshot(q, (querySnapshot) => {
         setPosts([]);
+        const workPosts: DocumentData[] = [];
         querySnapshot.forEach((doc) => {
           const data: DocumentData = doc.data();
           const { id } = doc;
-          setPosts((prev: DocumentData[]) => [...prev, { ...data, id }]);
+          workPosts.push({ ...data, id });
         });
+        setPosts(workPosts);
       });
     };
     if (currentUser.uid) {
