@@ -12,16 +12,17 @@ import { db } from '../firebaseConfig';
 import Post from './Post';
 import { verticalScale, horizontalScale } from '../utils/Metrics';
 import getCurrentCity from '../utils/getCurrentCity';
+import LoadingSkeleton from './LoadingSkeleton';
 
 export default function PostsList() {
   const [posts, setPosts] = React.useState<DocumentData[]>([]);
   const [mappedPosts, setMappedPosts] = React.useState<ReactElement[]>([]);
   const [sortingCriteria, setSortingCriteria] = React.useState('date added');
   const [location, setLocation] = React.useState('');
+  const [loading, setLoading] = React.useState(true);
   let unsubscribe: Unsubscribe;
 
   const getPosts = async () => {
-    console.log('loading');
     unsubscribe = onSnapshot(
       query(collection(db, 'publicPosts'), orderBy('date', 'desc')),
       (querySnapshot) => {
@@ -37,21 +38,22 @@ export default function PostsList() {
     );
     const loc = await getCurrentCity();
     setLocation(loc);
-    console.log('finished loading');
   };
 
   React.useEffect(() => {
+    setLoading(true);
     getPosts();
     const sortedPosts: DocumentData[] = posts.sort((a, b) => b.date.seconds - a.date.seconds);
     const mapPosts = sortedPosts.map((post) => <Post post={post} key={post.id} />);
     setMappedPosts(mapPosts);
-
+    setLoading(false);
     return () => {
       unsubscribe();
     };
   }, []);
 
   React.useEffect(() => {
+    setLoading(true);
     let mapPosts: ReactElement[] = [];
     if (sortingCriteria === 'current location') {
       const getLocation = async () => {
@@ -60,18 +62,21 @@ export default function PostsList() {
           mapPosts = filteredPosts.map((post) => <Post post={post} key={post.id} />);
           setMappedPosts(mapPosts);
         } catch (error) {
-          console.error('Nie udało się ustalić lokalizacji');
+          // Error retrieving data
         }
       };
       getLocation();
+      setLoading(false);
     } else if (sortingCriteria === 'likes') {
       const sortedPosts = posts.sort((a, b) => b.likes.length - a.likes.length);
       mapPosts = sortedPosts.map((post) => <Post post={post} key={post.id} />);
       setMappedPosts(mapPosts);
+      setLoading(false);
     } else if (sortingCriteria === 'date added') {
       const sortedPosts: DocumentData[] = posts.sort((a, b) => b.date.seconds - a.date.seconds);
       mapPosts = sortedPosts.map((post) => <Post post={post} key={post.id} />);
       setMappedPosts(mapPosts);
+      setLoading(false);
     }
   }, [sortingCriteria, posts]);
 
@@ -91,6 +96,14 @@ export default function PostsList() {
           <Select.Item label="Bieżąca lokalizacja" value="current location" />
         </Select>
       </Flex>
+      {loading || mappedPosts.length === 0 ? (
+        <>
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+        </>
+      ) : null}
       {mappedPosts}
     </ScrollView>
   );
