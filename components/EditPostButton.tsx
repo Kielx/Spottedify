@@ -101,14 +101,11 @@ function EditPostButton({ poste }: DocumentData) {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
-      <Tooltip label="Edytuj" bg="secondary.500" rounded="md" placement="top">
+      <Tooltip label="Edytuj" bg="secondary.500" rounded="xl" placement="top">
         <IconButton
           onPress={() => {
             setModalVisible(true);
           }}
-          position="absolute"
-          top="0"
-          right="10"
           icon={<Icon as={<MaterialCommunityIcons name="pencil" />} color="white" size="md" />}
         />
       </Tooltip>

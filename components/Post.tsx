@@ -1,16 +1,12 @@
 import React, { useContext } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { Box, Text, Flex, Button, useToast, WarningIcon, Image, VStack } from 'native-base';
+import { Box, Text, Flex, Image, VStack, HStack } from 'native-base';
 import { DocumentData } from 'firebase/firestore';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
 import LikeUser from './LikeUser';
 import RemovePostButton from './RemovePostButton';
 import EditPostButton from './EditPostButton';
-
-type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
+import PostDetailsButton from './PostDetailsButton';
 
 type Props = {
   post: DocumentData;
@@ -18,9 +14,6 @@ type Props = {
 
 function Post({ post }: Props) {
   const { currentUser } = useContext(AuthContext);
-  const toast = useToast();
-  const toastId = 'signin-error';
-  const navigation = useNavigation<homeScreenProp>();
   const postAuthor = post.authorId === currentUser?.uid ? 'Ty' : post.authorName;
   const isBigScreen = useMediaQuery({ query: '(min-width: 768px)' });
 
@@ -28,11 +21,11 @@ function Post({ post }: Props) {
     <Box
       flexDirection={isBigScreen ? 'row' : 'column'}
       key={post.id}
-      _light={{ bg: 'green.300', color: 'white' }}
+      _light={{ bg: 'light.100', color: 'white' }}
       _dark={{ bg: 'light.600', color: 'white' }}
       my="4"
       p="0"
-      rounded="md"
+      rounded="xl"
       shadow="3">
       {post.photo ? (
         <Image
@@ -48,61 +41,35 @@ function Post({ post }: Props) {
         />
       ) : null}
       <VStack flex="1">
-        <Box p="4">
-          <Text pt="1" fontWeight="bold" fontSize="xl">
-            {post.title}
-          </Text>
-          <Text fontSize="sm" color="gray.500" _dark={{ color: 'gray.400' }}>
-            {postAuthor}
-          </Text>
-          <Text fontSize="sm" color="gray.500" _dark={{ color: 'gray.400' }}>
-            {post.date.toDate().toLocaleDateString('pl-PL')} - {post.location}
-          </Text>
+        <Box p="2">
+          <HStack justifyContent="space-between" alignItems="center">
+            <Text fontWeight="bold" fontSize="xl" _light={{ color: 'gray.600' }}>
+              {post.title}
+            </Text>
+            <Flex flexDirection="row" alignItems="center">
+              <Text fontSize="lg" fontWeight="bold">
+                {post.likes.length}
+              </Text>
+              <LikeUser size="5" color="red.700" post={post} />
+            </Flex>
+          </HStack>
+          <HStack>
+            <Text fontSize="xs" color="gray.500" _dark={{ color: 'gray.400' }}>
+              {postAuthor} - {post.date.toDate().toLocaleDateString('pl-PL')} - {post.location}
+            </Text>
+          </HStack>
           <Text numberOfLines={3} py="1">
             {post.description}
           </Text>
-          <Flex flexDirection="row" alignItems="center">
-            <Text fontSize="lg" fontWeight="bold" pr="2">
-              {post.likes.length}
-            </Text>
-            <LikeUser size="5" mt="0.5" color="red.700" ml="2" post={post} />
-          </Flex>
         </Box>
-
-        <Button
-          roundedTop={0}
-          _web={{
-            roundedLeft: 0,
-          }}
-          onPress={
-            currentUser
-              ? () => navigation.navigate('Details', { post })
-              : () => {
-                  if (!toast.isActive('signin-error')) {
-                    toast.show({
-                      id: toastId,
-                      placement: 'top',
-                      render: () => (
-                        <Box bg="warning.500" px="4" py="1" alignItems="center" rounded="md" mb={5}>
-                          <Text color="white" fontSize="md" px="2" alignItems="center">
-                            <WarningIcon color="white" pr="2" />
-                            Musisz być zalogowany by wyświetlić szczegóły!
-                          </Text>
-                        </Box>
-                      ),
-                    });
-                  }
-                }
-          }>
-          Szczegóły
-        </Button>
+        {post.authorId === currentUser?.uid ? (
+          <HStack>
+            <PostDetailsButton post={post} />
+            <RemovePostButton postr={post} />
+            <EditPostButton poste={post} />
+          </HStack>
+        ) : null}
       </VStack>
-      {post.authorId === currentUser?.uid ? (
-        <>
-          <RemovePostButton postr={post} />
-          <EditPostButton poste={post} />
-        </>
-      ) : null}
     </Box>
   );
 }

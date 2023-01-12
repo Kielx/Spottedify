@@ -35,7 +35,7 @@ function LikeUser({ post }: DocumentData) {
     <Tooltip
       label={userLiked ? 'Usuń polubienie' : 'Dodaj polubienie'}
       bg={userLiked ? 'primary.500' : 'secondary.500'}
-      rounded="md"
+      rounded="xl"
       placement="top">
       <IconButton
         _icon={{
@@ -53,7 +53,7 @@ function LikeUser({ post }: DocumentData) {
                     id: toastId,
                     placement: 'top',
                     render: () => (
-                      <Box bg="warning.500" px="4" py="1" alignItems="center" rounded="md" mb={5}>
+                      <Box bg="warning.500" px="4" py="1" alignItems="center" rounded="xl" mb={5}>
                         <Text color="white" fontSize="md" px="2" alignItems="center">
                           <WarningIcon color="white" pr="2" />
                           Musisz być zalogowany by wykonać tą czynność!

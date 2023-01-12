@@ -48,14 +48,11 @@ function RemovePostButton({ postr }: Props) {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
-      <Tooltip label="Usuń" bg="secondary.500" rounded="md" placement="top">
+      <Tooltip label="Usuń" bg="secondary.500" rounded="xl" placement="top">
         <IconButton
           onPress={() => {
             setModalVisible(true);
           }}
-          position="absolute"
-          top="0"
-          right="0"
           icon={
             <Icon as={<MaterialCommunityIcons name="delete-outline" />} color="white" size="md" />
           }
