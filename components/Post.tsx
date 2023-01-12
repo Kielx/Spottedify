@@ -61,8 +61,10 @@ function Post({ post }: Props) {
           <Text numberOfLines={3} py="1">
             {post.description}
           </Text>
-          <Flex flexDirection="row">
-            {post.likes.length}
+          <Flex flexDirection="row" alignItems="center">
+            <Text fontSize="lg" fontWeight="bold" pr="2">
+              {post.likes.length}
+            </Text>
             <LikeUser size="5" mt="0.5" color="red.700" ml="2" post={post} />
           </Flex>
         </Box>
