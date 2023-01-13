@@ -21,7 +21,7 @@ function PostShort({ post }: Props) {
       _dark={{ bg: 'light.600', color: 'white' }}
       my="1"
       p="0"
-      rounded="xl"
+      rounded="lg"
       shadow="3">
       {post.photo ? (
         <Image

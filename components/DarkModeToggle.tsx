@@ -6,19 +6,33 @@ function ToggleDarkMode() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <HStack space={2} alignItems="center" px={2}>
-      <MoonIcon size="5" mt="0.5" _light={{ color: 'black' }} _dark={{ color: 'white' }} />
+      <MoonIcon
+        size="5"
+        mt="0.5"
+        color="white"
+        opacity={0.9}
+        _dark={{
+          opacity: 0.7,
+        }}
+      />
       <Switch
         isChecked={colorMode === 'light'}
         colorScheme="coolGray"
+        opacity={0.9}
+        _dark={{
+          opacity: 0.7,
+        }}
         onToggle={toggleColorMode}
         aria-label={colorMode === 'light' ? 'switch to dark mode' : 'switch to light mode'}
       />
       <SunIcon
-        _light={{ color: 'black' }}
-        _dark={{ color: 'white' }}
+        color="white"
+        opacity={0.9}
+        _dark={{
+          opacity: 0.7,
+        }}
         size="5"
         mt="0.5"
-        color="white"
       />
     </HStack>
   );

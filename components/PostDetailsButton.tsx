@@ -1,6 +1,5 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DocumentData } from 'firebase/firestore';
-import { Box, Text, useToast, WarningIcon, Tooltip, Icon, Button } from 'native-base';
+import { Box, useToast, WarningIcon, Tooltip, Button, Text, HStack } from 'native-base';
 import React, { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -20,17 +19,10 @@ function PostDetailsButton({ post }: Props) {
   const navigation = useNavigation<homeScreenProp>();
 
   return (
-    <Tooltip label="Szczegóły" bg="secondary.500" rounded="xl" placement="top">
+    <Tooltip label="Szczegóły" bg="secondary.500" rounded="lg" placement="top">
       <Button
-        rounded="full"
-        backgroundColor="blue.500"
-        icon={
-          <Icon
-            as={<MaterialCommunityIcons name="card-account-details" />}
-            color="white"
-            size="md"
-          />
-        }
+        backgroundColor="primary.700"
+        rounded="lg"
         onPress={
           currentUser
             ? () => navigation.navigate('Details', { post })
@@ -40,7 +32,7 @@ function PostDetailsButton({ post }: Props) {
                     id: toastId,
                     placement: 'top',
                     render: () => (
-                      <Box bg="warning.500" px="4" py="1" alignItems="center" rounded="xl" mb={5}>
+                      <Box bg="warning.500" px="4" py="1" alignItems="center" rounded="lg" mb={5}>
                         <Text color="white" fontSize="md" px="2" alignItems="center">
                           <WarningIcon color="white" pr="2" />
                           Musisz być zalogowany by wyświetlić szczegóły!
@@ -51,7 +43,17 @@ function PostDetailsButton({ post }: Props) {
                 }
               }
         }>
-        Szczegóły
+        <HStack space="xs" alignItems="center">
+          <Text
+            fontWeight="medium"
+            fontSize="md"
+            color="white"
+            _dark={{
+              opacity: 0.8,
+            }}>
+            Szczegóły
+          </Text>
+        </HStack>
       </Button>
     </Tooltip>
   );

@@ -38,7 +38,7 @@ export default function App() {
             id: 'permission-error',
             placement: 'top',
             render: () => (
-              <Box bg="danger.500" px="4" py="1" alignItems="center" rounded="xl" mb={5}>
+              <Box bg="danger.500" px="4" py="1" alignItems="center" rounded="lg" mb={5}>
                 <Text color="white" fontSize="lg" fontWeight="bold" px="2" alignItems="center">
                   <WarningIcon color="white" pr="2" />
                   Błąd dostępu do aparatu!

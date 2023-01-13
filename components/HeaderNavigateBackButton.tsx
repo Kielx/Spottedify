@@ -39,8 +39,8 @@ function HeaderNavigateBackButton() {
         setBottomPanelSelectedItem(routeHighlightMap[previousRouteName]);
       }}>
       <HStack ml={1} alignItems="center">
-        <Icon as={<MaterialCommunityIcons name="chevron-left" />} color="blue.500" size="lg" />
-        <Text color="blue.500" fontSize="14">
+        <Icon as={<MaterialCommunityIcons name="chevron-left" />} color="white" size="lg" />
+        <Text color="white" fontSize="14">
           {previousRouteName || 'Wróć'}
         </Text>
       </HStack>
