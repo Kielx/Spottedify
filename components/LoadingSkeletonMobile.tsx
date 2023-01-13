@@ -1,13 +1,13 @@
 import { Center, HStack, VStack, Skeleton } from 'native-base';
 import React from 'react';
 
-function LoadingSkeleton() {
+function LoadingSkeletonMobile() {
   return (
     <Center w="100%">
-      <HStack
+      <VStack
         w="100%"
         borderWidth="1"
-        space={8}
+        space={4}
         my="4"
         rounded="lg"
         _dark={{
@@ -15,22 +15,22 @@ function LoadingSkeleton() {
         }}
         _light={{
           borderColor: 'coolGray.200',
-        }}
-        p="4">
-        <Skeleton flex="2" h="150" rounded="lg" />
-        <VStack flex="3" space="4">
-          <HStack space="2">
+        }}>
+        <Skeleton flex="2" h="130" roundedTop="lg" />
+        <VStack flex="3" space="4" p="4">
+          <HStack space="1">
             <Skeleton flex="8" />
             <Skeleton flex="1" startColor="red.500" />
           </HStack>
           <Skeleton.Text />
-          <HStack space="2" alignItems="center" justifyContent="flex-end">
-            <Skeleton h="8" w="1/4" rounded="lg" startColor="primary.700" />
+          <HStack space="5" alignItems="center">
+            <HStack flex="2" space="20" justifyContent="space-between" />
+            <Skeleton flex="1" rounded="lg" startColor="primary.700" />
           </HStack>
         </VStack>
-      </HStack>
+      </VStack>
     </Center>
   );
 }
 
-export default LoadingSkeleton;
+export default LoadingSkeletonMobile;

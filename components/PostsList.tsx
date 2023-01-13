@@ -1,17 +1,21 @@
+/* eslint-disable no-nested-ternary */
 import React, { ReactElement, useContext } from 'react';
 import { Flex, ScrollView, Select, Text } from 'native-base';
 import { DocumentData } from 'firebase/firestore';
+import { useMediaQuery } from 'react-responsive';
 import Post from './Post';
 import { verticalScale, horizontalScale } from '../utils/Metrics';
 import getCurrentCity from '../utils/getCurrentCity';
 import LoadingSkeleton from './LoadingSkeleton';
 import { AppContext } from '../context/AppContext';
+import LoadingSkeletonMobile from './LoadingSkeletonMobile';
 
 export default function PostsList() {
   const { posts, postsLoading, setPostsLoading } = useContext(AppContext);
   const [mappedPosts, setMappedPosts] = React.useState<ReactElement[]>([]);
   const [sortingCriteria, setSortingCriteria] = React.useState('date added');
   const [location, setLocation] = React.useState('');
+  const isBigScreen = useMediaQuery({ query: '(min-width: 768px)' });
 
   React.useEffect(() => {
     const getLocation = async () => {
@@ -72,12 +76,19 @@ export default function PostsList() {
         </Select>
       </Flex>
       {postsLoading || mappedPosts.length === 0 ? (
-        <>
-          <LoadingSkeleton />
-          <LoadingSkeleton />
-          <LoadingSkeleton />
-          <LoadingSkeleton />
-        </>
+        isBigScreen ? (
+          <>
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+          </>
+        ) : (
+          <>
+            <LoadingSkeletonMobile />
+            <LoadingSkeletonMobile />
+          </>
+        )
       ) : null}
       {mappedPosts}
     </ScrollView>

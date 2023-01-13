@@ -39,6 +39,7 @@ function RemovePostButton({ postr }: Props) {
                 Anuluj
               </Button>
               <Button
+                colorScheme="danger"
                 onPress={() => {
                   RemovePost();
                 }}>
