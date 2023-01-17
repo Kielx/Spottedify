@@ -18,4 +18,5 @@
 - [ ] User Posts list
 - [ ] User likes list
 - [ ] Move signin up when keyboard is shown
+- [ ] Info when location disabled
 
