@@ -52,7 +52,7 @@ function PostShort({ post }: Props) {
           flexDirection="row"
           alignItems="center"
           justifyContent="space-between">
-          {post.authorId === currentUser?.uid ? <RemovePostButton postr={post} /> : ''}
+          {post.authorId === currentUser?.uid ? <RemovePostButton postr={post} /> : <Box />}
           <HStack space="2" flexDirection="row" justifyContent="flex-end">
             {post.authorId === currentUser?.uid ? <EditPostButton poste={post} /> : null}
             <PostDetailsButton userDetails post={post} />

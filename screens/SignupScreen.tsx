@@ -16,8 +16,10 @@ import {
   Center,
   useToast,
   WarningTwoIcon,
+  KeyboardAvoidingView,
 } from 'native-base';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { Platform } from 'react-native';
 import { RootStackParamList } from '../stacks/RootStack';
 import { AppContext } from '../context/AppContext';
 import { db } from '../firebaseConfig';
@@ -75,85 +77,87 @@ function SigninScreen() {
   };
 
   return (
-    <Center w="100%" h="full" _dark={{ bg: 'light.900' }}>
-      <Box safeArea p="2" py="8" w="90%" maxW="290">
-        <Heading
-          size="lg"
-          fontWeight="600"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}>
-          Witaj!
-        </Heading>
-        <Heading
-          mt="1"
-          _dark={{
-            color: 'warmGray.200',
-          }}
-          color="coolGray.600"
-          fontWeight="medium"
-          size="xs">
-          Utwórz nowe konto by korzystać z wszystkich funkcji!
-        </Heading>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <Center w="100%" h="full" _dark={{ bg: 'light.900' }}>
+        <Box safeArea p="2" py="8" w="90%" maxW="290">
+          <Heading
+            size="lg"
+            fontWeight="600"
+            color="coolGray.800"
+            _dark={{
+              color: 'warmGray.50',
+            }}>
+            Witaj!
+          </Heading>
+          <Heading
+            mt="1"
+            _dark={{
+              color: 'warmGray.200',
+            }}
+            color="coolGray.600"
+            fontWeight="medium"
+            size="xs">
+            Utwórz nowe konto by korzystać z wszystkich funkcji!
+          </Heading>
 
-        <VStack space={3} mt="5">
-          <FormControl>
-            <FormControl.Label>Adres E-mail</FormControl.Label>
-            <Input type="email" onChangeText={(value) => handleChange('email', value)} />
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Nazwa użytkownika</FormControl.Label>
-            <Input onChangeText={(value) => handleChange('name', value)} />
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Hasło</FormControl.Label>
-            <Input type="password" onChangeText={(value) => handleChange('password', value)} />
-            <Link
-              _text={{
-                fontSize: 'xs',
-                fontWeight: '500',
-                color: 'primary.600',
-              }}
-              onPress={() => {
-                navigation.navigate('ResetPassword');
-              }}
-              alignSelf="flex-end"
-              mt="1">
-              Masz już konto, ale zapomniałeś hasła?
-            </Link>
-          </FormControl>
-          <Button
-            onPress={() => signup(formInputs.email, formInputs.password, formInputs.name)}
-            mt="2">
-            Stwórz konto
-          </Button>
-          <HStack mt="6" justifyContent="center">
-            <Text
-              fontSize="sm"
-              color="coolGray.600"
-              _dark={{
-                color: 'warmGray.200',
-              }}>
-              Masz już konto?
-            </Text>
-            <Link
-              onPress={() => {
-                navigation.navigate('Signin');
-                setBottomPanelSelectedItem(2);
-              }}
-              _text={{
-                color: 'primary.600',
-                fontWeight: 'medium',
-                fontSize: 'sm',
-              }}>
-              {' '}
-              Zaloguj się!
-            </Link>
-          </HStack>
-        </VStack>
-      </Box>
-    </Center>
+          <VStack space={3} mt="5">
+            <FormControl>
+              <FormControl.Label>Adres E-mail</FormControl.Label>
+              <Input type="email" onChangeText={(value) => handleChange('email', value)} />
+            </FormControl>
+            <FormControl>
+              <FormControl.Label>Nazwa użytkownika</FormControl.Label>
+              <Input onChangeText={(value) => handleChange('name', value)} />
+            </FormControl>
+            <FormControl>
+              <FormControl.Label>Hasło</FormControl.Label>
+              <Input type="password" onChangeText={(value) => handleChange('password', value)} />
+              <Link
+                _text={{
+                  fontSize: 'xs',
+                  fontWeight: '500',
+                  color: 'primary.600',
+                }}
+                onPress={() => {
+                  navigation.navigate('ResetPassword');
+                }}
+                alignSelf="flex-end"
+                mt="1">
+                Masz już konto, ale zapomniałeś hasła?
+              </Link>
+            </FormControl>
+            <Button
+              onPress={() => signup(formInputs.email, formInputs.password, formInputs.name)}
+              mt="2">
+              Stwórz konto
+            </Button>
+            <HStack mt="6" justifyContent="center">
+              <Text
+                fontSize="sm"
+                color="coolGray.600"
+                _dark={{
+                  color: 'warmGray.200',
+                }}>
+                Masz już konto?
+              </Text>
+              <Link
+                onPress={() => {
+                  navigation.navigate('Signin');
+                  setBottomPanelSelectedItem(2);
+                }}
+                _text={{
+                  color: 'primary.600',
+                  fontWeight: 'medium',
+                  fontSize: 'sm',
+                }}>
+                {' '}
+                Zaloguj się!
+              </Link>
+            </HStack>
+          </VStack>
+        </Box>
+      </Center>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -11,9 +11,11 @@ import {
   Button,
   Center,
   WarningTwoIcon,
+  KeyboardAvoidingView,
 } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Platform } from 'react-native';
 import { RootStackParamList } from '../stacks/RootStack';
 
 type ResetPasswordScreenProp = StackNavigationProp<RootStackParamList, 'ResetPassword'>;
@@ -56,43 +58,45 @@ function ResetPassword() {
   };
 
   return (
-    <Center w="100%" h="full" _dark={{ bg: 'light.900' }}>
-      <Box safeArea p="2" py="8" w="90%" maxW="290">
-        <Heading
-          size="lg"
-          fontWeight="600"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}>
-          Zapomniałeś hasła?
-        </Heading>
-        <Heading
-          mt="1"
-          _dark={{
-            color: 'warmGray.200',
-          }}
-          color="coolGray.600"
-          fontWeight="medium"
-          size="xs">
-          Podaj swój adres e-mail, a wyślemy Ci wiadomość z przypomnieniem!
-        </Heading>
-
-        <VStack space={3} mt="5">
-          <FormControl>
-            <FormControl.Label>Adres E-mail</FormControl.Label>
-            <Input type="email" onChangeText={(value) => handleChange('email', value)} />
-          </FormControl>
-          <Button
-            onPress={() => {
-              resetPassword(formInputs.email);
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <Center w="100%" h="full" _dark={{ bg: 'light.900' }}>
+        <Box safeArea p="2" py="8" w="90%" maxW="290">
+          <Heading
+            size="lg"
+            fontWeight="600"
+            color="coolGray.800"
+            _dark={{
+              color: 'warmGray.50',
+            }}>
+            Zapomniałeś hasła?
+          </Heading>
+          <Heading
+            mt="1"
+            _dark={{
+              color: 'warmGray.200',
             }}
-            mt="2">
-            Wyslij wiadomość z przypomnieniem
-          </Button>
-        </VStack>
-      </Box>
-    </Center>
+            color="coolGray.600"
+            fontWeight="medium"
+            size="xs">
+            Podaj swój adres e-mail, a wyślemy Ci wiadomość z przypomnieniem!
+          </Heading>
+
+          <VStack space={3} mt="5">
+            <FormControl>
+              <FormControl.Label>Adres E-mail</FormControl.Label>
+              <Input type="email" onChangeText={(value) => handleChange('email', value)} />
+            </FormControl>
+            <Button
+              onPress={() => {
+                resetPassword(formInputs.email);
+              }}
+              mt="2">
+              Wyslij wiadomość z przypomnieniem
+            </Button>
+          </VStack>
+        </Box>
+      </Center>
+    </KeyboardAvoidingView>
   );
 }
 
