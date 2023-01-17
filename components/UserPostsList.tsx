@@ -16,16 +16,17 @@ export default function UserPostsList() {
 
   useEffect(() => {
     setPostsLoading(true);
-    const preFilteredPosts = posts.filter(
-      (post: { authorId: string }) => post.authorId === currentUser?.uid
-    );
+
     if (sortingCriteria === 'likedPosts') {
-      const likedPosts = preFilteredPosts.filter((post: DocumentData) =>
+      const likedPosts = posts.filter((post: DocumentData) =>
         post.likes.includes(currentUser?.uid)
       );
       setFilteredPosts(likedPosts);
     }
     if (sortingCriteria === 'userPosts') {
+      const preFilteredPosts = posts.filter(
+        (post: { authorId: string }) => post.authorId === currentUser?.uid
+      );
       setFilteredPosts(preFilteredPosts);
     }
     setPostsLoading(false);

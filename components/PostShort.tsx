@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, Image, Box, HStack } from 'native-base';
 import { DocumentData } from 'firebase/firestore';
 import LikeUser from './LikeUser';
 import RemovePostButton from './RemovePostButton';
 import EditPostButton from './EditPostButton';
 import PostDetailsButton from './PostDetailsButton';
+import { AuthContext } from '../utils/AuthStateListener';
 
 type Props = {
   post: DocumentData;
 };
 
 function PostShort({ post }: Props) {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <Box
       flexDirection="row"
@@ -49,9 +52,9 @@ function PostShort({ post }: Props) {
           flexDirection="row"
           alignItems="center"
           justifyContent="space-between">
-          <RemovePostButton postr={post} />
+          {post.authorId === currentUser?.uid ? <RemovePostButton postr={post} /> : ''}
           <HStack space="2" flexDirection="row" justifyContent="flex-end">
-            <EditPostButton poste={post} />
+            {post.authorId === currentUser?.uid ? <EditPostButton poste={post} /> : null}
             <PostDetailsButton userDetails post={post} />
           </HStack>
         </HStack>
