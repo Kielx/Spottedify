@@ -1,18 +1,20 @@
 import { DocumentData } from 'firebase/firestore';
-import { Box, useToast, WarningIcon, Tooltip, Button, Text, HStack } from 'native-base';
+import { Box, useToast, WarningIcon, Tooltip, Button, Text, Icon } from 'native-base';
 import React, { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RootStackParamList } from '../stacks/RootStack';
 import { AuthContext } from '../utils/AuthStateListener';
 
 type Props = {
+  userDetails: boolean;
   post: DocumentData;
 };
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
-function PostDetailsButton({ post }: Props) {
+function PostDetailsButton({ post, userDetails }: Props) {
   const { currentUser } = useContext(AuthContext);
   const toast = useToast();
   const toastId = 'signin-error';
@@ -43,7 +45,9 @@ function PostDetailsButton({ post }: Props) {
                 }
               }
         }>
-        <HStack space="xs" alignItems="center">
+        {userDetails ? (
+          <Icon as={MaterialCommunityIcons} name="card-text-outline" size="md" color="white" />
+        ) : (
           <Text
             fontWeight="medium"
             fontSize="md"
@@ -53,7 +57,7 @@ function PostDetailsButton({ post }: Props) {
             }}>
             Szczegóły
           </Text>
-        </HStack>
+        )}
       </Button>
     </Tooltip>
   );

@@ -135,7 +135,7 @@ function BottomPanel() {
   );
 
   return (
-    <HStack bg="primary.700" alignItems="center" safeAreaBottom shadow={6}>
+    <HStack bg="primary.800" alignItems="center" safeAreaBottom shadow={6}>
       {!currentUser ? loggedOutItems : loggedInItems}
     </HStack>
   );

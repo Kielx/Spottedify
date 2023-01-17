@@ -81,7 +81,7 @@ function Post({ post }: Props) {
             </HStack>
           ) : null}
 
-          <PostDetailsButton post={post} />
+          <PostDetailsButton userDetails={false} post={post} />
         </HStack>
       </VStack>
     </Box>

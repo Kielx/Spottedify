@@ -9,12 +9,13 @@ function UserDetailsScreen() {
   return (
     <VStack
       _dark={{
-        bg: 'coolGray.700',
+        bg: 'warmGray.700',
       }}
       flex={1}
       space={3}
       alignItems="center"
-      justifyContent="center">
+      justifyContent="center"
+      py={4}>
       <Avatar
         size="2xl"
         bg="amber.500"
@@ -24,25 +25,33 @@ function UserDetailsScreen() {
         {userProfile?.name[0] || currentUser.email[0]}
       </Avatar>
       <Heading>{userProfile?.name || currentUser.email}</Heading>
-      <Text color="muted.400" fontSize="lg">
-        W serwisie od{' '}
-        {new Date(currentUser.metadata.creationTime).toLocaleDateString('pl-PL', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })}
-      </Text>
-      <Text color="muted.400" fontSize="lg">
-        Ostatnie logowanie{' '}
-        {new Date(currentUser.metadata.lastSignInTime).toLocaleDateString('pl-PL', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })}
-      </Text>
-      <Text color="muted.400" fontSize="lg">
+      <VStack space={0} alignItems="center">
+        <Text color="muted.400" fontSize="md">
+          W serwisie od{' '}
+          {new Date(currentUser.metadata.creationTime).toLocaleDateString('pl-PL', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </Text>
+        <Text color="muted.400" fontSize="md">
+          Ostatnie logowanie{' '}
+          {new Date(currentUser.metadata.lastSignInTime).toLocaleDateString('pl-PL', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </Text>
+      </VStack>
+      <Text
+        fontWeight="bold"
+        _dark={{
+          color: 'secondary.700',
+        }}
+        color="primary.700"
+        fontSize="xl">
         Twoje posty
       </Text>
       <UserPostsList />
