@@ -52,7 +52,7 @@ function UserDetailsScreen() {
         }}
         color="primary.700"
         fontSize="xl">
-        Twoje posty
+        Twoja lista postów
       </Text>
       <UserPostsList />
     </VStack>

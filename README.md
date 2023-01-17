@@ -14,9 +14,8 @@
 - [x] Add option to add likes to posts
 - [x] Update look and feel of details page
 - [x] Photo in details page
-- [ ] Camera - Edit Post
-- [ ] User Posts list
-- [ ] User likes list
+- [x] User Posts list
+- [x] User likes list
 - [ ] Move signin up when keyboard is shown
+- [ ] Camera - Edit Post
 - [ ] Info when location disabled
-
