@@ -25,7 +25,7 @@ function Post({ post }: Props) {
       _dark={{ bg: 'light.600', color: 'white' }}
       my="4"
       p="0"
-      rounded="lg"
+      rounded="xl"
       shadow="6">
       {post.photo ? (
         <Image
