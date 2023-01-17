@@ -9,14 +9,14 @@ function UserPostListSkeleton() {
         w="100%"
         borderWidth="1"
         my="1"
-        rounded="md"
+        rounded="lg"
         _dark={{
           borderColor: 'coolGray.500',
         }}
         _light={{
           borderColor: 'coolGray.200',
         }}>
-        <Skeleton flex="1" rounded="md" h="full" startColor="coolGray.100" />
+        <Skeleton flex="1" rounded="lg" h="full" startColor="coolGray.100" />
         <Skeleton.Text flex="10" p="2" />
       </HStack>
     </Center>

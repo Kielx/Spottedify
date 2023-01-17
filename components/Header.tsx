@@ -1,15 +1,19 @@
 import React from 'react';
-import { Text, Heading, Box } from 'native-base';
+import { Heading, Box } from 'native-base';
 
 function Header() {
   return (
-    <Box px={4} my={4}>
-      <Heading textAlign="center" size="lg" _dark={{ color: 'black' }}>
+    <Box px={4}>
+      <Heading
+        textAlign="center"
+        size="lg"
+        color="white"
+        opacity={0.9}
+        _dark={{
+          opacity: 0.7,
+        }}>
         Spottedify
       </Heading>
-      <Text fontSize="sm" textAlign="center" _dark={{ color: 'black' }}>
-        Twoje lokalne ogłoszenia
-      </Text>
     </Box>
   );
 }

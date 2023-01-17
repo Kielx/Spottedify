@@ -62,7 +62,7 @@ function SigninScreen() {
             id: toastId,
             placement: 'top',
             render: () => (
-              <Box bg="red.500" px="4" py="2" rounded="md" mb={5}>
+              <Box bg="red.500" px="4" py="2" rounded="lg" mb={5}>
                 <Text color="white" fontSize="lg" px="2">
                   <WarningTwoIcon color="white" size="sm" />
                   Wystąpił błąd podczas tworzenia konta!

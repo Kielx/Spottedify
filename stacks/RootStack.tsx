@@ -42,13 +42,14 @@ function NavigateBackButtonComponent() {
 
 function RootStack() {
   const { currentUser } = useContext(AuthContext);
-
   return (
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{
-        headerStyle: { backgroundColor: '#86efac' },
+        headerTintColor: 'white',
+        headerStyle: { backgroundColor: '#0e7490' },
         headerRight: ToggleDarkModeComponent,
+        headerShadowVisible: false,
       }}>
       <Stack.Screen
         name="Home"

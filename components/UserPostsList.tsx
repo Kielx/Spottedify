@@ -25,8 +25,7 @@ export default function UserPostsList() {
   ));
 
   return (
-    <ScrollView px={1} maxW="768px" w={horizontalScale(300)} h={verticalScale(350)}>
-      {}
+    <ScrollView flex="1" maxW="768px" w={horizontalScale(350)} h={verticalScale(350)}>
       {postsLoading ? [...Array(5)].map((_, i) => <UserPostListSkeleton key={i} />) : mapPosts}
     </ScrollView>
   );
