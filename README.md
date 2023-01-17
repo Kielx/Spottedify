@@ -18,4 +18,4 @@
 - [x] User likes list
 - [ ] Move signin up when keyboard is shown
 - [ ] Camera - Edit Post
-
+- [ ] Info when location disabled
