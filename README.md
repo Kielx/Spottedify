@@ -16,6 +16,6 @@
 - [x] Photo in details page
 - [x] User Posts list
 - [x] User likes list
-- [ ] Move signin up when keyboard is shown
+- [x] Move signin up when keyboard is shown
 - [ ] Camera - Edit Post
 - [ ] Info when location disabled
