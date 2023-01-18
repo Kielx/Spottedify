@@ -22,7 +22,7 @@ declare module 'native-base' {
 
 export default function App() {
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={theme}>
       <AuthStateListener>
         <AppContextProvider>
           <NavigationContainer>

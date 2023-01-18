@@ -77,8 +77,8 @@ function SigninScreen() {
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <Center w="100%" h="full" _dark={{ bg: 'light.900' }}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} w="100%" h="100%">
+      <Center w="100%" h="100%" _dark={{ bg: 'light.700' }}>
         <Box safeArea p="2" py="8" w="90%" maxW="290">
           <Heading
             size="lg"
@@ -103,15 +103,32 @@ function SigninScreen() {
           <VStack space={3} mt="5">
             <FormControl>
               <FormControl.Label>Adres E-mail</FormControl.Label>
-              <Input type="email" onChangeText={(value) => handleChange('email', value)} />
+              <Input
+                _dark={{
+                  borderColor: 'warmGray.400',
+                }}
+                type="email"
+                onChangeText={(value) => handleChange('email', value)}
+              />
             </FormControl>
             <FormControl>
               <FormControl.Label>Nazwa użytkownika</FormControl.Label>
-              <Input onChangeText={(value) => handleChange('name', value)} />
+              <Input
+                _dark={{
+                  borderColor: 'warmGray.400',
+                }}
+                onChangeText={(value) => handleChange('name', value)}
+              />
             </FormControl>
             <FormControl>
               <FormControl.Label>Hasło</FormControl.Label>
-              <Input type="password" onChangeText={(value) => handleChange('password', value)} />
+              <Input
+                _dark={{
+                  borderColor: 'warmGray.400',
+                }}
+                type="password"
+                onChangeText={(value) => handleChange('password', value)}
+              />
               <Link
                 _text={{
                   fontSize: 'xs',
