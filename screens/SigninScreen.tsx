@@ -45,6 +45,7 @@ function SigninScreen() {
         toast.show({
           title: 'Zalogowano!',
           description: `Poprawnie zalogowano jako ${user?.email}`,
+          placement: 'top',
         });
         navigation.navigate('Home');
         setBottomPanelSelectedItem(0);

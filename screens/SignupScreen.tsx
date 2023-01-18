@@ -54,6 +54,7 @@ function SigninScreen() {
         toast.show({
           title: 'Poprawnie stworzono nowe konto!',
           description: `Możesz teraz korzystać z wszystkich funkcji aplikacji.`,
+          placement: 'top',
         });
         navigation.navigate('Home');
         setBottomPanelSelectedItem(0);
