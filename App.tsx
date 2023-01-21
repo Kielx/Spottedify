@@ -10,7 +10,6 @@ import AppContextProvider from './context/AppContext';
 // Define the config
 const config = {
   useSystemColorMode: true,
-  initialColorMode: 'dark',
 };
 
 // extend the theme
