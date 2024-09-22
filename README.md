@@ -2,7 +2,7 @@
 
 Spottedify is a cross-platform mobile application designed for local "Spotted" community boards, allowing users to browse, post, edit, and delete listings. Built using modern technologies, the app is fast, scalable, and optimized for both web and mobile devices.
 
-![plot](assets\readme1.png)
+![Mobile View](assets/readme1.png)
 
 ## Project Overview
 
@@ -34,6 +34,6 @@ This project utilizes React, React Native, and Firebase to deliver a robust, sca
 - **Web**: Hosted on [Netlify](https://spottedify.netlify.app/) for fast and reliable web access.
 - **Mobile**: Available through Expo Go for testing and usage on mobile devices.
 
-## Conclusion
+## Summary
 
 This project reflects a comprehensive approach to modern web and mobile development. By focusing on user experience, responsiveness, and clean code practices, Spottedify delivers a versatile application that performs seamlessly across web and mobile platforms. Leveraging Firebase, React Native, and Expo ensures both scalability and a consistent user experience.
